@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Gate;
 
 use App\Http\Controllers\MusicController;
+use App\Http\Controllers\AuthorController;
 
 Route::get('/', function () {
   return view('home');
@@ -41,3 +44,19 @@ Route::controller(MusicController::class)->group(function () {
 // Film
 
 // Art
+
+// Author
+
+Route::controller(AuthorController::class)->group(function () {
+
+  Route::get('/author', 'index')->middleware(['auth', 'verified'])->name('author');
+  
+});
+
+Route::middleware('auth')->group(function () {
+  Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+  Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+  Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+require __DIR__.'/auth.php';
