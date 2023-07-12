@@ -2,17 +2,19 @@
 
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+use App\Http\Controllers\MusicController;
 
 Route::get('/', function () {
-    return view('welcome');
+  return view('home');
+});
+
+Route::controller(MusicController::class)->group(function () {
+  Route::get('/music', 'index')->name('music');
+
+  Route::get('/music/{artist}', 'artist')->name('music_artist');
+  Route::get('/music/{artist}/{record}', 'record')->name('music_record');
+  Route::get('/music/{artist}/{record}/{track}', 'track')->name('music_track');
+
+  Route::get('/music/tags', 'tags')->name('music_tags');
+  Route::get('/music/tags/{tag}', 'tag')->name('music_tag');
 });
