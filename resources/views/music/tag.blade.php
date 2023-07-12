@@ -1,13 +1,23 @@
 <x-layout>
 
-  <a 
-    href='/music/tags'
-    class='w-full flex justify-center items-center my-2 font-bold'>
-    Tag</a>
+  <nav
+    class='w-full flex flex-row justify-start items-center my-2 px-2'>
 
-  <div
-    class='w-full flex justify-center items-center my-2 font-bold'>
-    {{$tag->tag}}</div>
+    <a
+      href='/music/tags'
+      class='flex justify-center items-center mx-2'>
+      Tags</a>
+
+    <div
+      class='mx-2'>
+      /</div>
+
+    <a
+      href='/music/tags/{{$tag->tag}}'
+      class='flex justify-center items-center mx-2'>
+      {{ ucfirst($tag->tag) }}</a>
+
+  </nav>
 
   <div
     class='w-full flex flex-col md:flex-row justify-around items-center md:items-start'>

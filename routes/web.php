@@ -35,3 +35,9 @@ Route::controller(MusicController::class)->group(function () {
     ->where(['artist' => '[0-9]+', 'record' => '[0-9]+', 'track' => '[0-9]+'])
     ->name('music_track');
 });
+
+// Literature
+
+// Film
+
+// Art

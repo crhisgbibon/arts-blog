@@ -164,6 +164,7 @@ class MusicModel extends Model
   {
     return $collection = DB::table($this->tags)
       ->distinct()
+      ->orderBy('tag', 'asc')
       ->pluck('tag');
   }
 

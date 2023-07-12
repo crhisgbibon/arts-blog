@@ -1,12 +1,9 @@
 <x-layout>
 
-  <div
-    class='flex flex-col justify-start items-center'>
+  <nav
+    class='w-full flex flex-row justify-start items-center my-2 px-2'>
 
-    <nav
-      class='w-full flex flex-row justify-start items-center my-2 px-2'>
-
-      <a
+    <a
         class='mx-2'
         href='/music/'>
       Music</a>
@@ -20,7 +17,10 @@
         href='/music/{{$artist->id}}'>
       {{$artist->name}}</a>
 
-    </nav>
+  </nav>
+
+  <div
+    class='flex flex-col justify-start items-center'>
 
     <h1
       class='my-4 font-bold'>

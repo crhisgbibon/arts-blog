@@ -1,12 +1,27 @@
 <x-layout>
 
-  <div
-    class='w-full flex justify-center items-center my-2 font-bold'>
-    Music</div>
+  <nav
+    class='w-full flex flex-row justify-start items-center my-2 px-2'>
+
+    <a
+      href='/music'
+      class='flex justify-center items-center mx-2'>
+      Music</a>
+
+    <div
+      class='mx-2'>
+      /</div>
+
+    <a
+      href='/music/tags'
+      class='flex justify-center items-center mx-2'>
+      Tags</a>
+
+  </nav>
 
   <div
     class='w-full flex justify-center items-center my-2 font-bold'>
-    Latest Updates</div>
+    Latest</div>
 
   <div
     class='w-full flex flex-col md:flex-row justify-around items-center md:items-start'>
@@ -81,10 +96,5 @@
     </section>
 
   </div>
-
-  <a
-  href='music/tags'
-  class='w-full flex justify-center items-center my-2 font-bold'>
-  Tags</a>
 
 </x-layout>

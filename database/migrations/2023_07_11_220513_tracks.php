@@ -12,6 +12,7 @@ return new class extends Migration
       $table->id();
       $table->integer('artist_id');
       $table->integer('record_id');
+      $table->integer('pos');
       $table->string('name', 255);
       $table->integer('stars');
       $table->string('review', 1000);
