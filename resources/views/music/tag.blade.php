@@ -1,12 +1,13 @@
 <x-layout>
 
-  <div
+  <a 
+    href='/music/tags'
     class='w-full flex justify-center items-center my-2 font-bold'>
-    Music</div>
+    Tag</a>
 
   <div
     class='w-full flex justify-center items-center my-2 font-bold'>
-    Latest Updates</div>
+    {{$tag->tag}}</div>
 
   <div
     class='w-full flex flex-col md:flex-row justify-around items-center md:items-start'>
@@ -81,10 +82,5 @@
     </section>
 
   </div>
-
-  <a
-  href='music/tags'
-  class='w-full flex justify-center items-center my-2 font-bold'>
-  Tags</a>
 
 </x-layout>

@@ -14,8 +14,8 @@ class MusicModel extends Model
   private string $records = 'music_records';
   private string $tracks = 'music_tracks';
   private string $tags = 'music_tags';
-  private string $influence = 'music_influence';
-  private string $similar = 'music_similar';
+  private string $influences = 'music_influence';
+  private string $similars = 'music_similar';
   
   // ARTISTS
 
@@ -43,6 +43,14 @@ class MusicModel extends Model
       ->first();
   }
 
+  public function GetArtistsById(array $artists)
+  {
+    return $collection[0] = DB::table($this->artists)
+      ->select()
+      ->whereIn('id', $artists)
+      ->get();
+  }
+
   // RECORDS
 
   public function GetRecords()
@@ -67,6 +75,14 @@ class MusicModel extends Model
       ->select()
       ->where('id', '=', $record_id)
       ->first();
+  }
+
+  public function GetRecordsById(array $records)
+  {
+    return $collection[0] = DB::table($this->records)
+      ->select()
+      ->whereIn('id', $records)
+      ->get();
   }
 
   public function GetRecordsByArtist(int $artist_id)
@@ -119,6 +135,14 @@ class MusicModel extends Model
       ->first();
   }
 
+  public function GetTracksById(array $tracks)
+  {
+    return $collection[0] = DB::table($this->tracks)
+      ->select()
+      ->whereIn('id', $tracks)
+      ->get();
+  }
+
   public function GetArtistIdByTrackId(int $track_id)
   {
     return $id = DB::table($this->tracks)
@@ -133,6 +157,49 @@ class MusicModel extends Model
   {
     return $collection = DB::table($this->tags)
       ->select()
+      ->get();
+  }
+
+  public function GetUniqueTags()
+  {
+    return $collection = DB::table($this->tags)
+      ->distinct()
+      ->pluck('tag');
+  }
+
+  public function GetTagsByTag(string $tag)
+  {
+    return $collection = DB::table($this->tags)
+      ->select()
+      ->where('tag', '=', $tag)
+      ->get();
+  }
+
+  // INFLUENCES
+
+  public function GetInfluencesByArtist(int $artist_id)
+  {
+    return $collection = DB::table($this->influences)
+      ->select()
+      ->where('artist_id', '=', $artist_id)
+      ->get();
+  }
+
+  public function GetInfluencedByArtist(int $artist_id)
+  {
+    return $collection = DB::table($this->influences)
+      ->select()
+      ->where('influence_id', '=', $artist_id)
+      ->get();
+  }
+
+  // SIMILARS
+
+  public function GetSimilarsByArtist(int $artist_id)
+  {
+    return $collection = DB::table($this->similars)
+      ->select()
+      ->where('artist_id', '=', $artist_id)
       ->get();
   }
 }

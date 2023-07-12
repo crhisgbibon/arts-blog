@@ -9,12 +9,29 @@ Route::get('/', function () {
 });
 
 Route::controller(MusicController::class)->group(function () {
-  Route::get('/music', 'index')->name('music');
+  Route::get('/music', 'index')
+    ->name('music');
 
-  Route::get('/music/{artist}', 'artist')->name('music_artist');
-  Route::get('/music/{artist}/{record}', 'record')->name('music_record');
-  Route::get('/music/{artist}/{record}/{track}', 'track')->name('music_track');
 
-  Route::get('/music/tags', 'tags')->name('music_tags');
-  Route::get('/music/tags/{tag}', 'tag')->name('music_tag');
+
+  Route::get('/music/tags', 'tags')
+    ->name('music_tags');
+
+  Route::get('/music/tags/{tag}', 'tag')
+    ->where('tag', '[a-zA-Z]+')
+    ->name('music_tag');
+
+
+
+  Route::get('/music/{artist}', 'artist')
+    ->where('artist', '[0-9]+')
+    ->name('music_artist');
+
+  Route::get('/music/{artist}/{record}', 'record')
+    ->where(['artist' => '[0-9]+', 'record' => '[0-9]+'])
+    ->name('music_record');
+
+  Route::get('/music/{artist}/{record}/{track}', 'track')
+    ->where(['artist' => '[0-9]+', 'record' => '[0-9]+', 'track' => '[0-9]+'])
+    ->name('music_track');
 });
