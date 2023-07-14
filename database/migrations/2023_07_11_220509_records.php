@@ -15,6 +15,7 @@ return new class extends Migration
       $table->integer('release_year');
       $table->integer('stars');
       $table->string('review', 1000);
+      $table->boolean('hidden');
       $table->timestamps();
     });
   }

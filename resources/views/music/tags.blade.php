@@ -28,8 +28,8 @@
 
         <a
           class='my-2'
-          href='/music/tags/{{$tag}}'>
-          {{ ucfirst($tag) }}</a>
+          href='/music/tags/{{$tag->id}}'>
+          {{$tag->name}}</a>
 
       @endforeach
 

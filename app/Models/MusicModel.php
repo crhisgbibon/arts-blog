@@ -14,6 +14,7 @@ class MusicModel extends Model
   private string $records = 'music_records';
   private string $tracks = 'music_tracks';
   private string $tags = 'music_tags';
+  private string $tag_references = 'music_tag_references';
   private string $influences = 'music_influence';
   private string $similars = 'music_similar';
   
@@ -23,6 +24,7 @@ class MusicModel extends Model
   {
     return $collection = DB::table($this->artists)
       ->select()
+      ->where('hidden', '=', 0)
       ->get();
   }
 
@@ -30,6 +32,7 @@ class MusicModel extends Model
   {
     return $collection = DB::table($this->artists)
       ->select()
+      ->where('hidden', '=', 0)
       ->orderBy('updated_at', 'asc')
       ->limit(10)
       ->get();
@@ -39,6 +42,7 @@ class MusicModel extends Model
   {
     return $collection[0] = DB::table($this->artists)
       ->select()
+      ->where('hidden', '=', 0)
       ->where('id', '=', $artist_id)
       ->first();
   }
@@ -47,7 +51,17 @@ class MusicModel extends Model
   {
     return $collection[0] = DB::table($this->artists)
       ->select()
+      ->where('hidden', '=', 0)
       ->whereIn('id', $artists)
+      ->get();
+  }
+
+  public function GetArtistsByFirstLetter(string $letter)
+  {
+    return $collection = DB::table($this->artists)
+      ->select()
+      ->where('hidden', '=', 0)
+      ->where('name', 'LIKE', $letter . '%')
       ->get();
   }
 
@@ -57,6 +71,7 @@ class MusicModel extends Model
   {
     return $collection = DB::table($this->records)
       ->select()
+      ->where('hidden', '=', 0)
       ->get();
   }
 
@@ -64,6 +79,7 @@ class MusicModel extends Model
   {
     return $collection = DB::table($this->records)
       ->select()
+      ->where('hidden', '=', 0)
       ->orderBy('updated_at', 'asc')
       ->limit(10)
       ->get();
@@ -73,6 +89,7 @@ class MusicModel extends Model
   {
     return $collection = DB::table($this->records)
       ->select()
+      ->where('hidden', '=', 0)
       ->where('id', '=', $record_id)
       ->first();
   }
@@ -81,6 +98,7 @@ class MusicModel extends Model
   {
     return $collection[0] = DB::table($this->records)
       ->select()
+      ->where('hidden', '=', 0)
       ->whereIn('id', $records)
       ->get();
   }
@@ -89,6 +107,7 @@ class MusicModel extends Model
   {
     return $collection = DB::table($this->records)
       ->select()
+      ->where('hidden', '=', 0)
       ->where('artist_id', '=', $artist_id)
       ->get();
   }
@@ -97,8 +116,18 @@ class MusicModel extends Model
   {
     return $id = DB::table($this->records)
       ->select('artist_id')
+      ->where('hidden', '=', 0)
       ->where('id', '=', $record_id)
       ->value('artist_id');
+  }
+
+  public function GetRecordsByFirstLetter(string $letter)
+  {
+    return $collection = DB::table($this->records)
+      ->select()
+      ->where('hidden', '=', 0)
+      ->where('name', 'LIKE', $letter . '%')
+      ->get();
   }
   
   // TRACKS
@@ -107,6 +136,7 @@ class MusicModel extends Model
   {
     return $collection = DB::table($this->tracks)
       ->select()
+      ->where('hidden', '=', 0)
       ->get();
   }
 
@@ -114,6 +144,7 @@ class MusicModel extends Model
   {
     return $collection = DB::table($this->tracks)
       ->select()
+      ->where('hidden', '=', 0)
       ->orderBy('updated_at', 'asc')
       ->limit(10)
       ->get();
@@ -123,6 +154,7 @@ class MusicModel extends Model
   {
     return $collection = DB::table($this->tracks)
       ->select()
+      ->where('hidden', '=', 0)
       ->where('record_id', '=', $record_id)
       ->get();
   }
@@ -131,6 +163,7 @@ class MusicModel extends Model
   {
     return $collection = DB::table($this->tracks)
       ->select()
+      ->where('hidden', '=', 0)
       ->where('id', '=', $track_id)
       ->first();
   }
@@ -139,6 +172,7 @@ class MusicModel extends Model
   {
     return $collection[0] = DB::table($this->tracks)
       ->select()
+      ->where('hidden', '=', 0)
       ->whereIn('id', $tracks)
       ->get();
   }
@@ -147,8 +181,18 @@ class MusicModel extends Model
   {
     return $id = DB::table($this->tracks)
       ->select('artist_id')
+      ->where('hidden', '=', 0)
       ->where('id', '=', $track_id)
       ->value('artist_id');
+  }
+
+  public function GetTracksByFirstLetter(string $letter)
+  {
+    return $collection = DB::table($this->tracks)
+      ->select()
+      ->where('hidden', '=', 0)
+      ->where('name', 'LIKE', $letter . '%')
+      ->get();
   }
 
   // TAGS
@@ -157,22 +201,33 @@ class MusicModel extends Model
   {
     return $collection = DB::table($this->tags)
       ->select()
+      ->where('hidden', '=', 0)
       ->get();
   }
 
   public function GetUniqueTags()
   {
-    return $collection = DB::table($this->tags)
-      ->distinct()
-      ->orderBy('tag', 'asc')
-      ->pluck('tag');
+    return $collection = DB::table($this->tag_references)
+      ->where('hidden', '=', 0)
+      ->orderBy('name', 'asc')
+      ->get();
   }
 
-  public function GetTagsByTag(string $tag)
+  public function GetTagById(int $tag_id)
+  {
+    return $collection = DB::table($this->tag_references)
+      ->select()
+      ->where('hidden', '=', 0)
+      ->where('id', '=', $tag_id)
+      ->first();
+  }
+
+  public function GetTagsByTag(int $tag_id)
   {
     return $collection = DB::table($this->tags)
       ->select()
-      ->where('tag', '=', $tag)
+      ->where('hidden', '=', 0)
+      ->where('tag_id', '=', $tag_id)
       ->get();
   }
 

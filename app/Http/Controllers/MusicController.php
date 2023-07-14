@@ -112,9 +112,10 @@ class MusicController extends Controller
     ]);
   }
 
-  public function tag(string $tag)
+  public function tag(int $tag_id)
   {
-    $tags = $this->model->GetTagsByTag($tag);
+    $tag_info = $this->model->GetTagById($tag_id);
+    $tags = $this->model->GetTagsByTag($tag_id);
 
     $artists = [];
     $records = [];
@@ -142,10 +143,28 @@ class MusicController extends Controller
 
     return view('music.tag',
     [
-      'tag' => $tag,
+      'tag' => $tag_info,
       'artists' => $artist_data,
       'records' => $record_data,
       'tracks' => $track_data,
+    ]);
+  }
+
+  public function letter(string $letter)
+  {
+    $artists = $this->model->GetArtistsByFirstLetter($letter);
+    $artists = $artists->sortBy('name');
+    $records = $this->model->GetRecordsByFirstLetter($letter);
+    $records = $records->sortBy('name');
+    $tracks = $this->model->GetTracksByFirstLetter($letter);
+    $tracks = $tracks->sortBy('name');
+
+    return view('music.letter',
+    [
+      'letter' => $letter,
+      'artists' => $artists,
+      'records' => $records,
+      'tracks' => $tracks,
     ]);
   }
 }

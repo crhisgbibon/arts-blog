@@ -12,7 +12,8 @@ return new class extends Migration
       $table->id();
       $table->integer('ref_type');
       $table->integer('ref_id');
-      $table->string('tag', 255);
+      $table->integer('tag_id');
+      $table->boolean('hidden');
       $table->timestamps();
     });
   }

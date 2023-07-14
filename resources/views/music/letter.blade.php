@@ -1,26 +1,12 @@
 <x-layout>
 
-  <nav
-    class='w-full flex flex-row justify-start items-center my-2 px-2'>
-
-    <a
-      href='/music/tags'
-      class='flex justify-center items-center mx-2'>
-      Tags</a>
-
-    <div
-      class='mx-2'>
-      /</div>
-
-    <a
-      href='/music/tags/{{$tag->id}}'
-      class='flex justify-center items-center mx-2'>
-      {{$tag->name}}</a>
-
-  </nav>
+  <h1
+    class='w-full flex justify-center items-center m-2 p-2 font-bold'>
+    {{$letter}}
+  </h1>
 
   <div
-    class='w-full flex flex-col md:flex-row justify-around items-center md:items-start'>
+    class='w-full flex flex-col justify-around items-center'>
 
     <section
       class='flex flex-col justify-start items-center'>

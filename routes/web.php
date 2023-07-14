@@ -21,10 +21,12 @@ Route::controller(MusicController::class)->group(function () {
     ->name('music_tags');
 
   Route::get('/music/tags/{tag}', 'tag')
-    ->where('tag', '[a-zA-Z]+')
+    ->where('tag', '[0-9]+')
     ->name('music_tag');
 
-
+  Route::get('/music/{letter}', 'letter')
+    ->where('artist', '[a-z]+')
+    ->name('music_letter');
 
   Route::get('/music/{artist}', 'artist')
     ->where('artist', '[0-9]+')
@@ -49,8 +51,65 @@ Route::controller(MusicController::class)->group(function () {
 
 Route::controller(AuthorController::class)->group(function () {
 
-  Route::get('/author', 'index')->middleware(['auth', 'verified'])->name('author');
+  Route::get('/author_music', 'author_music')
+    ->middleware(['auth', 'verified'])
+    ->name('author_music');
+
   
+
+  Route::post('/author_music/create_music_artist', 'create_music_artist')
+    ->middleware(['auth', 'verified'])
+    ->name('create_music_artist');
+
+  Route::post('/author_music/edit_music_artist', 'edit_music_artist')
+    ->middleware(['auth', 'verified'])
+    ->name('edit_music_artist');
+
+  Route::post('/author_music/delete_music_artist', 'delete_music_artist')
+    ->middleware(['auth', 'verified'])
+    ->name('delete_music_artist');
+
+
+  
+  Route::post('/author_music/create_music_record', 'create_music_record')
+    ->middleware(['auth', 'verified'])
+    ->name('create_music_record');
+
+  Route::post('/author_music/edit_music_record', 'edit_music_record')
+    ->middleware(['auth', 'verified'])
+    ->name('edit_music_record');
+
+  Route::post('/author_music/delete_music_record', 'delete_music_record')
+    ->middleware(['auth', 'verified'])
+    ->name('delete_music_record');
+
+
+
+  Route::post('/author_music/create_music_track', 'create_music_track')
+    ->middleware(['auth', 'verified'])
+    ->name('create_music_track');
+
+  Route::post('/author_music/edit_music_track', 'edit_music_track')
+    ->middleware(['auth', 'verified'])
+    ->name('edit_music_track');
+
+  Route::post('/author_music/delete_music_track', 'delete_music_track')
+    ->middleware(['auth', 'verified'])
+    ->name('delete_music_track');
+
+
+
+  Route::post('/author_music/create_music_tag', 'create_music_tag')
+    ->middleware(['auth', 'verified'])
+    ->name('create_music_tag');
+
+  Route::post('/author_music/edit_music_tag', 'edit_music_tag')
+    ->middleware(['auth', 'verified'])
+    ->name('edit_music_tag');
+
+  Route::post('/author_music/delete_music_tag', 'delete_music_tag')
+    ->middleware(['auth', 'verified'])
+    ->name('delete_music_tag');
 });
 
 Route::middleware('auth')->group(function () {
