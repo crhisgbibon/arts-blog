@@ -25,7 +25,7 @@ Route::controller(MusicController::class)->group(function () {
     ->name('music_tag');
 
   Route::get('/music/{letter}', 'letter')
-    ->where('artist', '[a-z]+')
+    ->where('letter', '[a-z]+')
     ->name('music_letter');
 
   Route::get('/music/{artist}', 'artist')

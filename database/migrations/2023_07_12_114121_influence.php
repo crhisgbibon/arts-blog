@@ -13,6 +13,7 @@ return new class extends Migration
       $table->integer('artist_id');
       $table->integer('influence_id');
       $table->integer('stars');
+      $table->boolean('hidden');
       $table->timestamps();
     });
   }

@@ -45,9 +45,33 @@ class AuthorModel extends Model
       ->get();
   }
 
-  public function GetTags()
+  public function GetTagReferences()
   {
     return $collection = DB::table($this->tag_references)
+      ->select()
+      ->where('hidden', '=', 0)
+      ->get();
+  }
+
+  public function GetTags()
+  {
+    return $collection = DB::table($this->tags)
+      ->select()
+      ->where('hidden', '=', 0)
+      ->get();
+  }
+
+  public function GetInfluences()
+  {
+    return $collection = DB::table($this->influences)
+      ->select()
+      ->where('hidden', '=', 0)
+      ->get();
+  }
+
+  public function GetSimilar()
+  {
+    return $collection = DB::table($this->similars)
       ->select()
       ->where('hidden', '=', 0)
       ->get();
@@ -60,27 +84,19 @@ class AuthorModel extends Model
     $now = date('Y-m-d H:i:s');
     try
     {
-      DB::table($this->artists)->insert([
+      $id = DB::table($this->artists)->insertGetId([
         'name' => $name,
         'hidden' => 0,
         'created_at' => $now,
         'updated_at' => $now,
       ]);
-
-      $response = [
-        'status' => 'success',
-        'message' => 'Data inserted successfully',
-      ];
     }
     catch(QueryException $e)
     {
-      $response = [
-        'status' => 'error',
-        'message' => 'Error inserting data: ' . $e->getMessage(),
-      ];
+      $id = -1;
     }
 
-    return response()->json($response);
+    return $id;
   }
 
   public function edit_music_artist(
@@ -155,7 +171,7 @@ class AuthorModel extends Model
     $now = date('Y-m-d H:i:s');
     try
     {
-      DB::table($this->records)->insert([
+      $id = DB::table($this->records)->insertGetId([
         'artist_id' => $artist,
         'name' => $name,
         'release_year' => $year,
@@ -165,21 +181,13 @@ class AuthorModel extends Model
         'updated_at' => $now,
         'hidden' => 0,
       ]);
-
-      $response = [
-        'status' => 'success',
-        'message' => 'Data inserted successfully',
-      ];
     }
     catch(QueryException $e)
     {
-      $response = [
-        'status' => 'error',
-        'message' => 'Error inserting data: ' . $e->getMessage(),
-      ];
+      $id = -1;
     }
 
-    return response()->json($response);
+    return $id;
   }
 
   public function edit_music_record(
@@ -438,6 +446,284 @@ class AuthorModel extends Model
           'hidden' => 1,
           'updated_at' => $now,
         ]);
+
+      $response = [
+        'status' => 'success',
+        'message' => 'Data inserted successfully',
+      ];
+    }
+    catch(QueryException $e)
+    {
+      $response = [
+        'status' => 'error',
+        'message' => 'Error inserting data: ' . $e->getMessage(),
+      ];
+    }
+
+    return response()->json($response);
+  }
+
+  public function add_tags(
+    int $ref_type,
+    int $ref_id,
+    array $tags)
+  {
+    date_default_timezone_set("Europe/London");
+    $now = date('Y-m-d H:i:s');
+
+    try
+    {
+      $toInsert = [];
+
+      foreach($tags as $tag)
+      {
+        $toInsert[] = [
+          'ref_type' => $ref_type,
+          'ref_id' => $ref_id,
+          'tag_id' => $tag,
+          'created_at' => $now,
+          'updated_at' => $now,
+          'hidden' => 0,
+        ];
+      }
+
+      DB::table($this->tags)->insert($toInsert);
+
+      $response = [
+        'status' => 'success',
+        'message' => 'Data inserted successfully',
+      ];
+    }
+    catch(QueryException $e)
+    {
+      $response = [
+        'status' => 'error',
+        'message' => 'Error inserting data: ' . $e->getMessage(),
+      ];
+    }
+
+    return response()->json($response);
+  }
+
+  public function edit_tags(
+    int $ref_type,
+    int $ref_id,
+    array $tags)
+  {
+    date_default_timezone_set("Europe/London");
+    $now = date('Y-m-d H:i:s');
+
+    try
+    {
+      $existing = DB::table($this->tags)
+        ->select('id')
+        ->where('ref_type', '=', $ref_type)
+        ->where('ref_id', '=', $ref_id)
+        ->pluck('id');
+
+      $dif = array_diff($existing->toArray(), $tags);
+
+      DB::table($this->tags)
+        ->whereIn('id', $dif)
+        ->delete();
+
+      $toInsert = [];
+
+      foreach($tags as $tag)
+      {
+        $toInsert[] = [
+          'ref_type' => $ref_type,
+          'ref_id' => $ref_id,
+          'tag_id' => $tag,
+          'created_at' => $now,
+          'updated_at' => $now,
+          'hidden' => 0,
+        ];
+      }
+
+      DB::table($this->tags)->insert($toInsert);
+
+      $response = [
+        'status' => 'success',
+        'message' => 'Data inserted successfully',
+      ];
+    }
+    catch(QueryException $e)
+    {
+      $response = [
+        'status' => 'error',
+        'message' => 'Error inserting data: ' . $e->getMessage(),
+      ];
+    }
+
+    return response()->json($response);
+  }
+
+  public function add_influences(
+    int $artist_id,
+    array $influence_ids)
+  {
+    date_default_timezone_set("Europe/London");
+    $now = date('Y-m-d H:i:s');
+
+    try
+    {
+      $toInsert = [];
+
+      foreach($influence_ids as $influence)
+      {
+        $toInsert[] = [
+          'artist_id' => $artist_id,
+          'influence_id' => (int)$influence,
+          'stars' => 1,
+          'created_at' => $now,
+          'updated_at' => $now,
+          'hidden' => 0,
+        ];
+      }
+
+      DB::table($this->influences)->insert($toInsert);
+
+      $response = [
+        'status' => 'success',
+        'message' => 'Data inserted successfully',
+      ];
+    }
+    catch(QueryException $e)
+    {
+      $response = [
+        'status' => 'error',
+        'message' => 'Error inserting data: ' . $e->getMessage(),
+      ];
+    }
+
+    return response()->json($response);
+  }
+
+  public function edit_influences(
+    int $artist_id,
+    array $influence_ids)
+  {
+    date_default_timezone_set("Europe/London");
+    $now = date('Y-m-d H:i:s');
+
+    try
+    {
+      $existing = DB::table($this->influences)
+        ->select('id')
+        ->where('artist_id', '=', $artist_id)
+        ->pluck('id');
+
+      DB::table($this->influences)
+        ->whereIn('id', $existing)
+        ->delete();
+
+      $toInsert = [];
+
+      foreach($influence_ids as $influence)
+      {
+        $toInsert[] = [
+          'artist_id' => $artist_id,
+          'influence_id' => (int)$influence,
+          'stars' => 1,
+          'created_at' => $now,
+          'updated_at' => $now,
+          'hidden' => 0,
+        ];
+      }
+
+      DB::table($this->influences)->insert($toInsert);
+
+      $response = [
+        'status' => 'success',
+        'message' => 'Data inserted successfully',
+      ];
+    }
+    catch(QueryException $e)
+    {
+      $response = [
+        'status' => 'error',
+        'message' => 'Error inserting data: ' . $e->getMessage(),
+      ];
+    }
+
+    return response()->json($response);
+  }
+
+  public function add_similar(
+    int $artist_id,
+    array $similar_ids)
+  {
+    date_default_timezone_set("Europe/London");
+    $now = date('Y-m-d H:i:s');
+
+    try
+    {
+      $toInsert = [];
+
+      foreach($similar_ids as $sim)
+      {
+        $toInsert[] = [
+          'artist_id' => $artist_id,
+          'similar_id' => (int)$sim,
+          'stars' => 1,
+          'created_at' => $now,
+          'updated_at' => $now,
+          'hidden' => 0,
+        ];
+      }
+
+      DB::table($this->similars)->insert($toInsert);
+
+      $response = [
+        'status' => 'success',
+        'message' => 'Data inserted successfully',
+      ];
+    }
+    catch(QueryException $e)
+    {
+      $response = [
+        'status' => 'error',
+        'message' => 'Error inserting data: ' . $e->getMessage(),
+      ];
+    }
+
+    return response()->json($response);
+  }
+
+  public function edit_similar(
+    int $artist_id,
+    array $similar_ids)
+  {
+    date_default_timezone_set("Europe/London");
+    $now = date('Y-m-d H:i:s');
+
+    try
+    {
+      $existing = DB::table($this->similars)
+        ->select('id')
+        ->where('artist_id', '=', $artist_id)
+        ->pluck('id');
+
+      DB::table($this->similars)
+        ->whereIn('id', $existing)
+        ->delete();
+
+      $toInsert = [];
+
+      foreach($similar_ids as $sim)
+      {
+        $toInsert[] = [
+          'artist_id' => $artist_id,
+          'similar_id' => (int)$sim,
+          'stars' => 1,
+          'created_at' => $now,
+          'updated_at' => $now,
+          'hidden' => 0,
+        ];
+      }
+
+      DB::table($this->similars)->insert($toInsert);
 
       $response = [
         'status' => 'success',

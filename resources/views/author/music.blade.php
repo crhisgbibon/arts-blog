@@ -7,28 +7,28 @@
       id='button_artists_panel'
       class='w-1/4 h-full'
       onclick='Switch("artists_panel")'>
-        Artists
+      Artists
     </button>
 
     <button
       id='button_records_panel'
       class='w-1/4 h-full border-x border-black'
       onclick='Switch("records_panel")'>
-        Records
+      Records
     </button>
 
     <button
       id='button_tracks_panel'
       class='w-1/4 h-full border-r border-black'
       onclick='Switch("tracks_panel")'>
-        Tracks
+      Tracks
     </button>
 
     <button
       id='button_tags_panel'
       class='w-1/4 h-full'
       onclick='Switch("tags_panel")'>
-        Tags
+      Tags
     </button>
 
   </nav>
@@ -43,17 +43,71 @@
       class='w-full flex flex-wrap my-2'>
 
       <div
-        class='w-full flex flex-col justify-start items-center'>
+        class='w-full flex flex-col justify-start items-center border-b border-black mb-2'>
 
-        <input
-          onkeyup='searchMatches()'
-          class='my-2 rounded-lg w-11/12 max-w-lg'
-          type="text"
-          id="create_artist_name">
+        <div
+          class='w-11/12 flex flex-row justify-center items-center'>
+
+          <label
+            class='my-2 w-32 flex justify-center items-center'
+            for="create_artist_name">
+            Name:</label>
+
+          <input
+            onkeyup='searchMatches()'
+            class='my-2 rounded-lg w-11/12 max-w-lg'
+            type="text"
+            id="create_artist_name">
+
+        </div>
+
+        <div
+          class='w-11/12 flex flex-col justify-center items-center'>
+
+          <label
+            class='my-2 w-32 flex justify-center items-center'
+            for="create_artist_influences">
+            Influences:</label>
+
+          <select
+            multiple
+            size=10
+            class='rounded-lg m-2 w-full max-w-lg'
+            id='create_artist_influences'>
+            @isset($artists)
+              @foreach($artists as $artist)
+                <option value='{{$artist->id}}'>{{$artist->name}}</option>
+              @endforeach
+            @endisset
+          </select>
+
+        </div>
+
+        <div
+          class='w-11/12 flex flex-col justify-center items-center'>
+
+          <label
+            class='my-2 w-32 flex justify-center items-center'
+            for="create_artist_similar">
+            Similar:</label>
+
+          <select
+            multiple
+            size=10
+            class='rounded-lg m-2 w-full max-w-lg'
+            id='create_artist_similar'>
+            @isset($artists)
+              @foreach($artists as $artist)
+                <option value='{{$artist->id}}'>{{$artist->name}}</option>
+              @endforeach
+            @endisset
+          </select>
+
+        </div>
 
         <x-secondary-button
           onclick='create_music_artist()'
-          class='my-2 p-2'>
+          class='my-4 p-2'>
           Create</x-secondary-button>
 
       </div>
@@ -64,25 +118,82 @@
 
           <h2
             data-value='{{$artist->name}}'
-            class='artists w-full md:w-1/2 lg:w-1/3 flex flex-row justify-center items-center my-2'>
-
-            <button
-              onclick='edit_music_artist({{$artist->id}})'
-              class='mx-2 rounded-lg border border-black p-2'>
-              S
-            </button>
+            class='artists w-full md:w-1/2 lg:w-1/3 flex flex-col justify-center items-center my-2 py-2 border-b border-black'>
 
             <input
               id='artist{{$artist->id}}'
-              class='mx-2 rounded-lg border border-black p-2 w-full max-w-lg'
+              class='m-2 rounded-lg border border-black p-2 w-10/12 max-w-lg'
               type='text'
               value='{{$artist->name}}'>
 
-            <button
-              onclick='delete_music_artist({{$artist->id}})'
-              class='mx-2 rounded-lg border border-black p-2'>
-              X
-            </button>
+            <label
+              class='my-2 w-10/12 flex justify-center items-center'
+              for="artist_influences_{{$artist->id}}">
+              Influences:</label>
+
+            <select
+              multiple
+              size=10
+              class='rounded-lg m-2 w-10/12 max-w-lg'
+              id='artist_influences_{{$artist->id}}'>
+              @isset($artists)
+                @foreach($artists as $artist_instance)
+                  <option
+                  
+                  @foreach($influences as $in)
+                    @if($in->artist_id === $artist->id &&
+                        $in->influence_id === $artist_instance->id)
+                      selected
+                    @endif
+                  @endforeach
+                  
+                  value='{{$artist_instance->id}}'>{{$artist_instance->name}}</option>
+                @endforeach
+              @endisset
+            </select>
+
+            <label
+              class='my-2 w-10/12 flex justify-center items-center'
+              for="artist_similar_{{$artist->id}}">
+              Similar:</label>
+
+            <select
+              multiple
+              size=10
+              class='rounded-lg m-2 w-10/12 max-w-lg'
+              id='artist_similar_{{$artist->id}}'>
+              @isset($artists)
+                @foreach($artists as $artist_instance)
+                  <option
+                  
+                  @foreach($similar as $sim)
+                    @if($sim->artist_id === $artist->id &&
+                        $sim->similar_id === $artist_instance->id)
+                      selected
+                    @endif
+                  @endforeach
+                  
+                  value='{{$artist_instance->id}}'>{{$artist_instance->name}}</option>
+                @endforeach
+              @endisset
+            </select>
+
+            <div
+              class='w-10/12 flex flex-row justify-center items-center my-2'>
+
+              <button
+                onclick='edit_music_artist({{$artist->id}})'
+                class='rounded-lg border border-black w-1/3 mx-2'>
+                Save
+              </button>
+
+              <button
+                onclick='delete_music_artist({{$artist->id}})'
+                class='rounded-lg border border-black w-1/3 mx-2'>
+                Delete
+              </button>
+
+            </div>
             
           </h2>
 
@@ -99,7 +210,7 @@
       class='w-full flex flex-wrap my-2'>
 
       <div
-        class='w-full flex flex-col justify-start items-center'>
+        class='w-full flex flex-col justify-start items-center border-b border-black mb-2'>
 
         <div
           class='w-11/12 flex flex-row justify-center items-center'>
@@ -188,9 +299,31 @@
 
         </div>
 
+        <div
+          class='w-11/12 flex flex-row justify-center items-center'>
+
+          <label
+            class='my-2 w-24 flex justify-center items-center max-w-lg'
+            for="create_new_record_artist">
+            Tags:</label>
+
+          <select
+            multiple
+            size=10
+            class='rounded-lg m-2 w-full max-w-lg'
+            id='create_new_record_tags'>
+            @isset($tags)
+              @foreach($tags as $tag)
+                <option value='{{$tag->id}}'>{{$tag->name}}</option>
+              @endforeach
+            @endisset
+          </select>
+
+        </div>
+
         <x-secondary-button
           onclick='create_music_record()'
-          class='my-2 p-2'>
+          class='my-4 p-2'>
           Create</x-secondary-button>
 
       </div>
@@ -255,6 +388,26 @@
               maxLength=1000
               rows="4" cols="50">{{$record->review}}</textarea>
 
+              <select
+              multiple
+              size=10
+              class='rounded-lg m-2 w-10/12 max-w-lg'
+              id='record_tags_{{$record->id}}'>
+              @isset($tags)
+                @foreach($tags as $tag)
+                  <option value='{{$tag->id}}'
+                    @foreach($actual_tags as $actual_tag)
+                      @if($actual_tag->ref_type === 2 &&
+                      $actual_tag->ref_id === $record->id &&
+                      $actual_tag->tag_id === $tag->id)
+                        selected
+                      @endif
+                    @endforeach
+                    >{{$tag->name}}</option>
+                @endforeach
+              @endisset
+            </select>
+
             <div
               class='w-10/12 flex flex-row justify-center items-center my-2'>
 
@@ -287,7 +440,7 @@
       class='w-full flex flex-wrap my-2'>
 
       <div
-        class='w-full flex flex-col justify-start items-center'>
+        class='w-full flex flex-col justify-start items-center border-b border-black mb-2'>
 
         <div
           class='w-11/12 flex flex-row justify-center items-center'>
@@ -394,7 +547,7 @@
 
         <x-secondary-button
           onclick='create_music_track()'
-          class='my-2 p-2'>
+          class='my-4 p-2'>
           Create</x-secondary-button>
 
       </div>
@@ -511,56 +664,62 @@
       class='w-full flex flex-wrap my-2'>
 
       <div
-        class='w-full flex flex-col justify-start items-center'>
-
-        <input
-          onkeyup="searchTags()"
-          class='my-2 rounded-lg w-full max-w-lg'
-          type="text"
-          id="create_music_tag">
+        class='w-full flex flex-col justify-start items-center border-b border-black mb-2'>
 
         <div
-          class='max-h-64 overflow-y-auto w-11/12'
-          id="create_music_tag_results"></div>
+          class='w-11/12 flex flex-row justify-center items-center'>
+
+          <label
+            class='my-2 w-32 flex justify-center items-center'
+            for="create_artist_name">
+            Name:</label>
+
+            <input
+            onkeyup="searchTags()"
+            class='my-2 rounded-lg w-11/12 max-w-lg'
+            type="text"
+            id="create_music_tag">
+
+        </div>
 
         <x-secondary-button
           onclick='create_music_tag()'
-          class='my-2 p-2'>
+          class='my-4 p-2'>
           Create</x-secondary-button>
 
       </div>
 
       @isset($tags)
 
-      @foreach($tags as $tag)
+        @foreach($tags as $tag)
 
-        <h2
-          data-value='{{$tag->name}}'
-          class='tags w-full md:w-1/2 lg:w-1/3 flex flex-row justify-center items-center my-2'>
+          <h2
+            data-value='{{$tag->name}}'
+            class='tags w-full md:w-1/2 lg:w-1/3 flex flex-row justify-center items-center my-2'>
 
-          <button
-            onclick='edit_music_tag({{$tag->id}})'
-            class='mx-2 rounded-lg border border-black p-2'>
-            S
-          </button>
+            <button
+              onclick='edit_music_tag({{$tag->id}})'
+              class='mx-2 rounded-lg border border-black p-2'>
+              S
+            </button>
 
-          <input
-            id='tag{{$tag->id}}'
-            class='mx-2 rounded-lg border border-black p-2 w-full max-w-lg'
-            type='text'
-            value='{{$tag->name}}'>
+            <input
+              id='tag{{$tag->id}}'
+              class='mx-2 rounded-lg border border-black p-2 w-full max-w-lg'
+              type='text'
+              value='{{$tag->name}}'>
 
-          <button
-            onclick='delete_music_tag({{$tag->id}})'
-            class='mx-2 rounded-lg border border-black p-2'>
-            X
-          </button>
-          
-        </h2>
+            <button
+              onclick='delete_music_tag({{$tag->id}})'
+              class='mx-2 rounded-lg border border-black p-2'>
+              X
+            </button>
+            
+          </h2>
 
-      @endforeach
+        @endforeach
 
-    @endisset
+      @endisset
 
     </section>
 
@@ -701,9 +860,33 @@
     function create_music_artist()
     {
       let name = document.getElementById('create_artist_name').value;
+
+      let influence_select = document.getElementById('create_artist_influences');
+      let influence_selected = influence_select.selectedOptions;
+      let influences = [];
+      for(let i = 0; i < influence_selected.length; i++)
+      {
+        influences.push(influence_selected[i].value);
+      }
+
+      let similar_select = document.getElementById('create_artist_similar');
+      let similar_selected = similar_select.selectedOptions;
+      let similar = [];
+      for(let i = 0; i < similar_selected.length; i++)
+      {
+        similar.push(similar_selected[i].value);
+      }
+
       if(name === '') return window.alert('no data submitted');
-      let data = JSON.stringify({ name:name });
+
+      let data = JSON.stringify({
+        name:name,
+        influences:influences,
+        similar:similar,
+      });
+
       console.log(data);
+
       Post(data, 'create_music_artist',
       function(response)
       {
@@ -720,9 +903,34 @@
     function edit_music_artist(id)
     {
       let name = document.getElementById('artist' + id).value;
+
+      let influence_select = document.getElementById('artist_influences_' + id);
+      let influence_selected = influence_select.selectedOptions;
+      let influences = [];
+      for(let i = 0; i < influence_selected.length; i++)
+      {
+        influences.push(influence_selected[i].value);
+      }
+
+      let similar_select = document.getElementById('artist_similar_' + id);
+      let similar_selected = similar_select.selectedOptions;
+      let similar = [];
+      for(let i = 0; i < similar_selected.length; i++)
+      {
+        similar.push(similar_selected[i].value);
+      }
+
       if(name === '') return window.alert('no data submitted');
-      let data = JSON.stringify({ id:id, name:name });
+
+      let data = JSON.stringify({
+        id:id,
+        name:name,
+        influences:influences,
+        similar:similar,
+      });
+
       console.log(data);
+
       Post(data, 'edit_music_artist',
       function(response)
       {
@@ -763,12 +971,22 @@
       let stars = document.getElementById('create_new_record_stars').value;
       let review = document.getElementById('create_new_record_review').value;
 
+      let tag_select = document.getElementById('create_new_record_tags');
+      let tag_selected = tag_select.selectedOptions;
+      let tags = [];
+      for(let i = 0; i < tag_selected.length; i++)
+      {
+        tags.push(tag_selected[i].value);
+      }
+
+
       let data = JSON.stringify({
         artist:artist,
         name:name,
         year:year,
         stars:stars,
         review:review,
+        tags:tags,
       });
 
       console.log(data);
@@ -793,7 +1011,16 @@
       let stars = document.getElementById('record_stars_' + id).value;
       let review = document.getElementById('record_review_' + id).value;
 
+      let tag_select = document.getElementById('record_tags_' + id);
+      let tag_selected = tag_select.selectedOptions;
+      let tags = [];
+      for(let i = 0; i < tag_selected.length; i++)
+      {
+        tags.push(tag_selected[i].value);
+      }
+
       if(name === '') return window.alert('no data submitted');
+
       let data = JSON.stringify({
         id:id,
         artist:artist,
@@ -801,8 +1028,11 @@
         year:year,
         stars:stars,
         review:review,
+        tags:tags,
       });
+
       console.log(data);
+
       Post(data, 'edit_music_record',
       function(response)
       {
