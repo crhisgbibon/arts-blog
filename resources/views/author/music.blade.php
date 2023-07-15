@@ -808,7 +808,7 @@
         if(parseInt(records[r].dataset.value) === input)
         {
           let opt = document.createElement('option');
-          opt.value = records[r].dataset.value;
+          opt.value = records[r].dataset.id;
           opt.innerHTML = records[r].dataset.name;
           select.appendChild(opt);
         }

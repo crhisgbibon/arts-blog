@@ -3,11 +3,11 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Arts-Blog</title>
+    <title>arts-blog</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
   </head>
   <body class="antialiased font-courier">
-    @include('layouts.navbar')
+    @include('layouts.navigation')
     {{ $slot }}
   </body>
 </html>

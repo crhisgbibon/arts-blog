@@ -1,26 +1,16 @@
 <x-layout>
 
   <nav
-    class='w-full flex flex-row justify-start items-center my-2 px-2'>
+    class='w-full flex flex-row justify-center items-center my-2 px-2'>
 
-    <a
-        class='mx-2'
-        href='/music/'>
-      Music</a>
-
-      <div
-        class='mx-2'>
-        /</div>
-
-      <a
-        class='mx-2'
-        href='/music/{{$artist->id}}'>
-      {{$artist->name}}</a>
+      <p
+        class='mx-2 font-bold'>
+        {{$artist->name}}</p>
 
   </nav>
 
   <div
-    class='flex flex-col justify-start items-center'>
+    class='flex flex-col justify-start items-center w-full'>
 
     <h1
       class='my-4 font-bold'>
@@ -30,61 +20,110 @@
 
       @foreach($records as $record)
 
-        <a
-          href='/music/{{$artist->id}}/{{$record->id}}'>
-          {{$record->name}}</a>
+        <div
+          class='w-full flex flex-row justify-between items-center w-11/12 max-w-lg my-2'>
+
+          <a
+            class='mx-2 w-full'
+            href='/music/{{$artist->id}}/{{$record->id}}'>
+            {{$record->name}}</a>
+
+          <div
+            class='flex flex-row justify-end items-center mx-2'>
+    
+            @isset($record->stars)
+    
+              @for($i = 0; $i < $record->stars; $i++)
+                <div
+                  class='font-bold mx-2'>
+                  &#9733;</div>
+              @endfor
+          
+            @endisset
+    
+          </div>
+
+          <a
+            class='mx-2 flex justify-end items-center'
+            href='/music/year/{{$record->release_year}}'>
+            {{$record->release_year}}</a>
+
+        </div>
 
       @endforeach
 
     @endisset
 
-    <h1
-      class='my-4 font-bold'>
-      Influences</h1>
+    <div
+      class='w-11/12 flex flex-col sm:flex-row justify-start sm:justify-center items-center sm:items-start max-w-lg'>
 
-    @isset($influences)
+      <section
+        class='w-full sm:w-1/3 flex flex-col justify-start items-center mx-4'>
 
-      @foreach($influences as $influence)
+        <h1
+          class='my-4 font-bold w-full flex justify-center items-center h-12'>
+          Influences</h1>
 
-        <a
-          href='/music/{{$influence->id}}'>
-          {{$influence->name}}</a>
+        @isset($influences)
 
-      @endforeach
+          @foreach($influences as $influence)
 
-    @endisset
+            <a
+              class='m-2 w-full flex justify-start items-center'
+              href='/music/{{$influence->id}}'>
+              {{$influence->name}}</a>
 
-    <h1
-      class='my-4 font-bold'>
-      Influenced</h1>
+          @endforeach
 
-    @isset($influenced)
+        @endisset
 
-      @foreach($influenced as $influence)
+      </section>
 
-        <a
-          href='/music/{{$influence->id}}'>
-          {{$influence->name}}</a>
+      <section
+        class='w-full sm:w-1/3 flex flex-col justify-start items-center mx-4'>
 
-      @endforeach
+        <h1
+          class='my-4 font-bold w-full flex justify-center items-center h-12'>
+          Influenced</h1>
 
-    @endisset
+        @isset($influenced)
 
-    <h1
-      class='my-4 font-bold'>
-      Similar</h1>
+          @foreach($influenced as $influence)
 
-    @isset($similars)
+            <a
+              class='m-2 w-full flex justify-start items-center'
+              href='/music/{{$influence->id}}'>
+              {{$influence->name}}</a>
 
-      @foreach($similars as $similar)
+          @endforeach
 
-        <a
-          href='/music/{{$similar->id}}'>
-          {{$similar->name}}</a>
+        @endisset
 
-      @endforeach
+      </section>
 
-    @endisset
+      <section
+        class='w-full sm:w-1/3 flex flex-col justify-start items-center mx-4'>
+
+        <h1
+          class='my-4 font-bold w-full flex justify-center items-center h-12'>
+          Similar</h1>
+
+        @isset($similars)
+
+          @foreach($similars as $similar)
+
+            <a
+              class='m-2 w-full flex justify-start items-center'
+              href='/music/{{$similar->id}}'>
+              {{$similar->name}}</a>
+
+          @endforeach
+
+        @endisset
+
+      </section>
+
+    </div>
 
   </div>
 

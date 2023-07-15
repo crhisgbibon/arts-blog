@@ -33,8 +33,8 @@ class MusicModel extends Model
     return $collection = DB::table($this->artists)
       ->select()
       ->where('hidden', '=', 0)
-      ->orderBy('updated_at', 'asc')
-      ->limit(10)
+      ->orderBy('updated_at', 'desc')
+      ->limit(5)
       ->get();
   }
 
@@ -58,11 +58,12 @@ class MusicModel extends Model
 
   public function GetArtistsByFirstLetter(string $letter)
   {
-    return $collection = DB::table($this->artists)
+    $collection = DB::table($this->artists)
       ->select()
       ->where('hidden', '=', 0)
-      ->where('name', 'LIKE', $letter . '%')
       ->get();
+
+    return $this->FilterFirstLetter($letter, $collection);
   }
 
   // RECORDS
@@ -80,8 +81,8 @@ class MusicModel extends Model
     return $collection = DB::table($this->records)
       ->select()
       ->where('hidden', '=', 0)
-      ->orderBy('updated_at', 'asc')
-      ->limit(10)
+      ->orderBy('updated_at', 'desc')
+      ->limit(5)
       ->get();
   }
 
@@ -100,6 +101,24 @@ class MusicModel extends Model
       ->select()
       ->where('hidden', '=', 0)
       ->whereIn('id', $records)
+      ->get();
+  }
+
+  public function GetRecordUniqueYears()
+  {
+    return $collection = DB::table($this->records)
+      ->select('release_year')
+      ->distinct()
+      ->where('hidden', '=', 0)
+      ->get();
+  }
+
+  public function GetRecordsByYear(int $year)
+  {
+    return $collection = DB::table($this->records)
+      ->select()
+      ->where('hidden', '=', 0)
+      ->where('release_year', '=', $year)
       ->get();
   }
 
@@ -123,11 +142,12 @@ class MusicModel extends Model
 
   public function GetRecordsByFirstLetter(string $letter)
   {
-    return $collection = DB::table($this->records)
+    $collection = DB::table($this->records)
       ->select()
       ->where('hidden', '=', 0)
-      ->where('name', 'LIKE', $letter . '%')
       ->get();
+
+    return $this->FilterFirstLetter($letter, $collection);
   }
   
   // TRACKS
@@ -145,8 +165,8 @@ class MusicModel extends Model
     return $collection = DB::table($this->tracks)
       ->select()
       ->where('hidden', '=', 0)
-      ->orderBy('updated_at', 'asc')
-      ->limit(10)
+      ->orderBy('updated_at', 'desc')
+      ->limit(5)
       ->get();
   }
 
@@ -188,11 +208,12 @@ class MusicModel extends Model
 
   public function GetTracksByFirstLetter(string $letter)
   {
-    return $collection = DB::table($this->tracks)
+    $collection = DB::table($this->tracks)
       ->select()
       ->where('hidden', '=', 0)
-      ->where('name', 'LIKE', $letter . '%')
       ->get();
+
+    return $this->FilterFirstLetter($letter, $collection);
   }
 
   // TAGS
@@ -231,6 +252,17 @@ class MusicModel extends Model
       ->get();
   }
 
+  public function GetTagsByReference(int $ref_type, int $ref_id)
+  {
+    return $collection = DB::table($this->tags)
+      ->join($this->tag_references, $this->tag_references.'.id', '=', $this->tags.'.tag_id')
+      ->select($this->tags.'.*', $this->tag_references.'.name')
+      ->where($this->tags.'.hidden', '=', 0)
+      ->where($this->tags.'.ref_type', '=', $ref_type)
+      ->where($this->tags.'.ref_id', '=', $ref_id)
+      ->get();
+  }
+
   // INFLUENCES
 
   public function GetInfluencesByArtist(int $artist_id)
@@ -257,5 +289,67 @@ class MusicModel extends Model
       ->select()
       ->where('artist_id', '=', $artist_id)
       ->get();
+  }
+  
+  // GENERIC
+
+  private function FilterFirstLetter(
+    string $letter,
+    $collection
+  )
+  {
+    $result = collect();
+
+    $the1 = 'The ';
+    $the2 = 'the ';
+
+    if($letter === '-')
+    {
+      foreach($collection as $item)
+      {
+        if(substr($item->name, 0, strlen($the1)) === $the1)
+        {
+          $substr = substr($item->name, strlen($the1));
+          if(is_numeric($substr[0]) || $this->is_symbolic($substr[0])) $result->push($item);
+        }
+        elseif(substr($item->name, 0, strlen($the2)) === $the2)
+        {
+          $substr = substr($item->name, strlen($the2));
+          if(is_numeric($substr[0]) || $this->is_symbolic($substr[0])) $result->push($item);
+        }
+        else
+        {
+          if(is_numeric($item->name[0]) || $this->is_symbolic($item->name[0])) $result->push($item);
+        }
+      }
+
+    }
+    else
+    {
+      foreach($collection as $item)
+      {
+        if(substr($item->name, 0, strlen($the1)) === $the1)
+        {
+          $substr = substr($item->name, strlen($the1));
+          if(strtolower($substr[0]) === strtolower($letter)) $result->push($item);
+        }
+        elseif(substr($item->name, 0, strlen($the2)) === $the2)
+        {
+          $substr = substr($item->name, strlen($the2));
+          if(strtolower($substr[0]) === strtolower($letter)) $result->push($item);
+        }
+        else
+        {
+          if(strtolower($item->name[0]) === strtolower($letter)) $result->push($item);
+        }
+      }
+    }
+
+    return $result;
+  }
+
+  private function is_symbolic($char)
+  {
+    return preg_match('/^[^\w\s]$/', $char);
   }
 }

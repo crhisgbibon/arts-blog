@@ -22,12 +22,15 @@ class MusicController extends Controller
     $artists = $this->model->GetTopTenArtistsByLastUpdated();
     $records = $this->model->GetTopTenRecordsByLastUpdated();
     $tracks = $this->model->GetTopTenTracksByLastUpdated();
+    $years = $this->model->GetRecordUniqueYears();
+    $years = $years->sortBy('release_year');
 
     return view('music.music',
     [
       'artists' => $artists,
       'records' => $records,
       'tracks' => $tracks,
+      'years' => $years,
     ]);
   }
 
@@ -60,8 +63,11 @@ class MusicController extends Controller
     }
 
     $influences_data = $this->model->GetArtistsById($influences_artists);
+    $influences_data = $influences_data->sortBy('name');
     $influenced_data = $this->model->GetArtistsById($influenced_artists);
+    $influenced_data = $influenced_data->sortBy('name');
     $similars_data = $this->model->GetArtistsById($similars_artists);
+    $similars_data = $similars_data->sortBy('name');
 
     return view('music.artist',
     [
@@ -79,12 +85,14 @@ class MusicController extends Controller
     $artist = $this->model->GetArtistById($artist_id);
     $record = $this->model->GetRecordById($record_id);
     $tracks = $this->model->GetTracksByRecord($record_id);
+    $tags = $this->model->GetTagsByReference(2, $record_id);
 
     return view('music.record',
     [
       'artist' => $artist,
       'record' => $record,
       'tracks' => $tracks,
+      'tags' => $tags,
     ]);
   }
 
@@ -138,8 +146,11 @@ class MusicController extends Controller
     }
 
     $artist_data = $this->model->GetArtistsById($artists);
+    $artist_data = $artist_data->sortBy('name');
     $record_data = $this->model->GetRecordsById($records);
+    $record_data = $record_data->sortBy('release_year');
     $track_data = $this->model->GetTracksById($tracks);
+    $track_data = $track_data->sortBy('name');
 
     return view('music.tag',
     [
@@ -165,6 +176,18 @@ class MusicController extends Controller
       'artists' => $artists,
       'records' => $records,
       'tracks' => $tracks,
+    ]);
+  }
+
+  public function year(int $year)
+  {
+    $records = $this->model->GetRecordsByYear($year);
+    $records = $records->sortBy('name');
+
+    return view('music.year',
+    [
+      'year' => $year,
+      'records' => $records,
     ]);
   }
 }

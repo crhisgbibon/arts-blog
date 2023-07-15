@@ -20,7 +20,7 @@
   </nav>
 
   <div
-    class='w-full flex flex-col md:flex-row justify-around items-center md:items-start'>
+    class='w-full flex flex-col sm:flex-row justify-around items-center sm:items-start'>
 
     <section
       class='flex flex-col justify-start items-center'>

@@ -4,11 +4,13 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Gate;
 
-use App\Http\Controllers\MusicController;
 use App\Http\Controllers\AuthorController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MusicController;
 
-Route::get('/', function () {
-  return view('home');
+Route::controller(HomeController::class)->group(function () {
+  Route::get('/', 'index')
+    ->name('home');
 });
 
 Route::controller(MusicController::class)->group(function () {
@@ -24,9 +26,19 @@ Route::controller(MusicController::class)->group(function () {
     ->where('tag', '[0-9]+')
     ->name('music_tag');
 
-  Route::get('/music/{letter}', 'letter')
-    ->where('letter', '[a-z]+')
+
+
+  Route::get('/music/letter/{letter}', 'letter')
+    ->where('letter', '[a-z-]+')
     ->name('music_letter');
+
+
+
+  Route::get('/music/year/{year}', 'year')
+    ->where('year', '[0-9]+')
+    ->name('music_year');
+
+
 
   Route::get('/music/{artist}', 'artist')
     ->where('artist', '[0-9]+')
