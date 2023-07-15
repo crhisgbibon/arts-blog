@@ -12,10 +12,9 @@
       class='mx-2'>
       /</div>
 
-    <a
-      href='/music/tags/{{$tag->id}}'
-      class='flex justify-center items-center mx-2'>
-      {{$tag->name}}</a>
+    <h1
+      class='flex justify-center items-center mx-2 font-bold'>
+      {{$tag->name}}</h1>
 
   </nav>
 
@@ -56,11 +55,22 @@
 
         @foreach($records as $record)
 
-          <a
-            class='my-2'
-            href='/music/{{$record->artist_id}}/{{$record->id}}'>
-            {{$record->name}}
-          </a>
+          <div
+            class='w-full flex flex-row justify-around items-center'>
+
+            <a
+              class='m-2'
+              href='/music/{{$record->artist_id}}/{{$record->id}}'>
+              {{$record->name}}
+            </a>
+
+            <a
+              class='m-2'
+              href='/music/year/{{$record->release_year}}'>
+              {{$record->release_year}}
+            </a>
+
+          </div>
 
         @endforeach
 

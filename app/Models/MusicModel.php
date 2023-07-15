@@ -34,7 +34,7 @@ class MusicModel extends Model
       ->select()
       ->where('hidden', '=', 0)
       ->orderBy('updated_at', 'desc')
-      ->limit(5)
+      ->limit(10)
       ->get();
   }
 
@@ -82,7 +82,16 @@ class MusicModel extends Model
       ->select()
       ->where('hidden', '=', 0)
       ->orderBy('updated_at', 'desc')
-      ->limit(5)
+      ->limit(10)
+      ->get();
+  }
+
+  public function GetRecordsByStars(int $star)
+  {
+    return $collection = DB::table($this->records)
+      ->select()
+      ->where('hidden', '=', 0)
+      ->where('stars', '=', $star)
       ->get();
   }
 
@@ -111,6 +120,15 @@ class MusicModel extends Model
       ->distinct()
       ->where('hidden', '=', 0)
       ->get();
+  }
+
+  public function GetYears()
+  {
+    return $collection = DB::table($this->records)
+      ->distinct()
+      ->select('release_year')
+      ->where('hidden', '=', 0)
+      ->pluck('release_year');
   }
 
   public function GetRecordsByYear(int $year)
@@ -166,7 +184,7 @@ class MusicModel extends Model
       ->select()
       ->where('hidden', '=', 0)
       ->orderBy('updated_at', 'desc')
-      ->limit(5)
+      ->limit(10)
       ->get();
   }
 

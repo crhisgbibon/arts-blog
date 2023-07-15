@@ -2,23 +2,23 @@
 
   <h1
     class='w-full flex justify-center items-center m-2 p-2 font-bold'>
-    Tags
+    Stars
   </h1>
 
   <section
     class='w-full h-full flex flex-wrap m-2 p-2'>
 
-    @isset($tags)
+    @isset($records)
 
-      @foreach($tags as $tag)
+      @for($i = 5; $i > 0; $i--)
 
         <a
           class='m-4 p-4'
-          href='/music/tags/{{$tag->id}}'>
-          {{$tag->name}}
+          href='/music/stars/{{$i}}'>
+          {{$i}} Stars
         </a>
 
-      @endforeach
+      @endfor
 
     @endisset
 

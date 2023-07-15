@@ -2,20 +2,20 @@
 
   <h1
     class='w-full flex justify-center items-center m-2 p-2 font-bold'>
-    Tags
+    Years
   </h1>
 
   <section
     class='w-full h-full flex flex-wrap m-2 p-2'>
 
-    @isset($tags)
+    @isset($years)
 
-      @foreach($tags as $tag)
+      @foreach($years as $year)
 
         <a
           class='m-4 p-4'
-          href='/music/tags/{{$tag->id}}'>
-          {{$tag->name}}
+          href='/music/year/{{$year}}'>
+          {{$year}}
         </a>
 
       @endforeach

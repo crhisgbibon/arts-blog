@@ -28,17 +28,41 @@ Route::controller(MusicController::class)->group(function () {
 
 
 
+  Route::get('/music/letter/', 'letters')
+    ->name('music_letters');
+  
   Route::get('/music/letter/{letter}', 'letter')
     ->where('letter', '[a-z-]+')
     ->name('music_letter');
 
 
 
+  Route::get('/music/year/', 'years')
+    ->name('music_years');
+
   Route::get('/music/year/{year}', 'year')
     ->where('year', '[0-9]+')
     ->name('music_year');
 
 
+
+  Route::get('/music/stars', 'stars')
+    ->name('music_stars');
+
+  Route::get('/music/stars/{star}', 'star')
+    ->where('star', '[1-5]+')
+    ->name('music_star');
+
+
+
+  Route::get('/music/artists', 'artists')
+    ->name('music_artists');
+
+  Route::get('/music/records', 'records')
+    ->name('music_records');
+
+  Route::get('/music/tracks', 'tracks')
+    ->name('music_tracks');
 
   Route::get('/music/{artist}', 'artist')
     ->where('artist', '[0-9]+')

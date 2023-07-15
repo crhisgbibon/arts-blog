@@ -34,6 +34,17 @@ class MusicController extends Controller
     ]);
   }
 
+  public function artists()
+  {
+    $artists = $this->model->GetArtists();
+    $artists = $artists->sortBy('name');
+
+    return view('music.artists',
+    [
+      'artists' => $artists,
+    ]);
+  }
+
   public function artist(int $artist_id)
   {
     $artist = $this->model->GetArtistById($artist_id);
@@ -79,6 +90,17 @@ class MusicController extends Controller
     ]);
   }
 
+  public function records()
+  {
+    $records = $this->model->GetRecords();
+    $records = $records->sortBy('name');
+
+    return view('music.records',
+    [
+      'records' => $records,
+    ]);
+  }
+
   public function record(int $artist_id, int $record_id)
   {
     $artist_id = $this->model->GetArtistIdByRecordId($record_id);
@@ -93,6 +115,17 @@ class MusicController extends Controller
       'record' => $record,
       'tracks' => $tracks,
       'tags' => $tags,
+    ]);
+  }
+
+  public function tracks()
+  {
+    $tracks = $this->model->GetTracks();
+    $tracks = $tracks->sortBy('name');
+
+    return view('music.tracks',
+    [
+      'tracks' => $tracks,
     ]);
   }
 
@@ -161,6 +194,18 @@ class MusicController extends Controller
     ]);
   }
 
+  public function letters()
+  {
+    $letters = ['-','a','b','c','d','e','f','g','h',
+    'i','j','k','l','m','n','o','p','q','r','s','t',
+    'u','v','w','x','y','z'];
+
+    return view('music.letters',
+    [
+      'letters' => $letters,
+    ]);
+  }
+
   public function letter(string $letter)
   {
     $artists = $this->model->GetArtistsByFirstLetter($letter);
@@ -179,6 +224,17 @@ class MusicController extends Controller
     ]);
   }
 
+  public function years()
+  {
+    $years = $this->model->GetYears();
+    $years = $years->sort();
+
+    return view('music.years',
+    [
+      'years' => $years,
+    ]);
+  }
+
   public function year(int $year)
   {
     $records = $this->model->GetRecordsByYear($year);
@@ -187,6 +243,29 @@ class MusicController extends Controller
     return view('music.year',
     [
       'year' => $year,
+      'records' => $records,
+    ]);
+  }
+
+  public function stars()
+  {
+    $records = $this->model->GetRecords();
+    $records = $records->sortBy('stars');
+
+    return view('music.stars',
+    [
+      'records' => $records,
+    ]);
+  }
+
+  public function star(int $star)
+  {
+    $records = $this->model->GetRecordsByStars($star);
+    $records = $records->sortBy('name');
+
+    return view('music.star',
+    [
+      'star' => $star,
       'records' => $records,
     ]);
   }

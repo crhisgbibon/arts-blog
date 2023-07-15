@@ -1,7 +1,7 @@
 <x-layout>
 
   <div
-    class='w-full flex flex-col justify-start items-center'>
+    class='w-full flex flex-col justify-start items-center mt-4 mb-8'>
 
     <nav
     class='flex flex-col sm:flex-row justify-start sm:justify-around items-center w-11/12 max-w-6xl mx-auto'>
