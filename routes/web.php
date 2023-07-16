@@ -91,6 +91,22 @@ Route::controller(AuthorController::class)->group(function () {
     ->middleware(['auth', 'verified'])
     ->name('author_music');
 
+  Route::get('/author_music/artists', 'author_music_artists')
+    ->middleware(['auth', 'verified'])
+    ->name('author_music_artists');
+
+  Route::get('/author_music/records', 'author_music_records')
+    ->middleware(['auth', 'verified'])
+    ->name('author_music_records');
+
+  Route::get('/author_music/tracks', 'author_music_tracks')
+    ->middleware(['auth', 'verified'])
+    ->name('author_music_tracks');
+
+  Route::get('/author_music/tags', 'author_music_tags')
+    ->middleware(['auth', 'verified'])
+    ->name('author_music_tags');
+
   
 
   Route::post('/author_music/create_music_artist', 'create_music_artist')

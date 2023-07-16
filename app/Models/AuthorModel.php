@@ -740,4 +740,13 @@ class AuthorModel extends Model
 
     return response()->json($response);
   }
+
+  public function SearchArtists(string $value)
+  {
+    return $collection = DB::table($this->artists)
+      ->select()
+      ->where('hidden', '=', 0)
+      ->where('name', 'LIKE', '%'.$value.'%')
+      ->get();
+  }
 }

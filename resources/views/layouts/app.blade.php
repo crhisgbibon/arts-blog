@@ -8,6 +8,7 @@
         <title>{{ config('app.name', 'arts-blog') }}</title>
         <script src="https://code.jquery.com/jquery-3.7.0.min.js" crossorigin="anonymous"></script>
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @livewireStyles
     </head>
     <body class="font-courier antialiased">
         <div class="min-h-screen">
@@ -27,5 +28,6 @@
                 {{ $slot }}
             </main>
         </div>
+        @livewireScripts
     </body>
 </html>

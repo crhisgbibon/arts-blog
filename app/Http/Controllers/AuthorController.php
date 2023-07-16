@@ -62,6 +62,60 @@ class AuthorController extends Controller
     return $this->render();
   }
 
+  public function author_music_artists()
+  {
+    if (!Gate::allows('is_admin'))
+    {
+      abort(403);
+    }
+
+    return view('author.artists',
+    [
+
+    ]);
+  }
+
+  public function author_music_records()
+  {
+    if (!Gate::allows('is_admin'))
+    {
+      abort(403);
+    }
+
+    return view('author.records',
+    [
+
+    ]);
+  }
+
+  public function author_music_tracks()
+  {
+    if (!Gate::allows('is_admin'))
+    {
+      abort(403);
+    }
+
+    return view('author.tracks',
+    [
+
+    ]);
+  }
+
+  public function author_music_tags()
+  {
+    if (!Gate::allows('is_admin'))
+    {
+      abort(403);
+    }
+
+    return view('author.tags',
+    [
+
+    ]);
+  }
+
+
+
   public function create_music_artist(Request $request)
   {
     if (!Gate::allows('is_admin'))
