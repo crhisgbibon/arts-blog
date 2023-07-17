@@ -1,5 +1,6 @@
-<section
-  class='w-full flex flex-wrap'>
+<div
+  x-data="{ open: false }"
+  class='w-full flex flex-col justify-start items-center'>
 
   <div
     class='w-full flex flex-col justify-start items-center'>
@@ -14,7 +15,8 @@
         type="text">
 
       <button
-        class='m-2 p-2 rounded-lg border border-black'>
+        x-on:click="open = ! open"
+        class='m-2 py-2 px-4 rounded-lg border border-black'>
         +
       </button>
 
@@ -22,96 +24,153 @@
 
   </div>
 
-  @isset($artists_search)
+  <div
+    x-show="open"
+    class='w-full flex flex-col justify-center items-center'>
 
-    @foreach($artists_search as $artist_search)
+    <input
+      class='my-2 mx-auto rounded-lg border border-black p-2 w-10/12 max-w-lg'
+      wire:model="create_name"
+      type='text'
+      value=''>
+
+    <label
+      class='my-2 w-10/12 flex justify-center items-center'>
+      Influences:</label>
+
+    <select
+      multiple
+      size=10
+      wire:model="create_influences"
+      class='m-2 w-10/12 max-w-lg'>
+
+      @isset($artists_all)
+        @foreach($artists_all as $artist_all)
+          <option value='{{$artist_all->id}}'>{{$artist_all->name}}</option>
+        @endforeach
+      @endisset
+    </select>
+
+    <label
+      class='my-2 w-10/12 flex justify-center items-center'>
+      Similar:</label>
+
+    <select
+      multiple
+      size=10
+      wire:model="create_similar"
+      class='m-2 w-10/12 max-w-lg'>
+      @isset($artists_all)
+        @foreach($artists_all as $artist_all)
+          <option value='{{$artist_all->id}}'>{{$artist_all->name}}</option>
+        @endforeach
+      @endisset
+    </select>
+
+    <div
+      class='w-10/12 flex flex-row justify-center items-center my-2 max-w-lg'>
 
       <button
-        class='m-2 p-2 rounded-lg border border-black'>
-        {{$artist_search->name}}
+        class='rounded-lg border border-black w-1/3 mx-2'
+        wire:click="create">
+        Create
       </button>
 
-    @endforeach
+    </div>
+    
+  </div>
 
-    <article
-      class='w-full flex flex-col justify-center items-center'>
+  @if($search)
+
+    <div
+      x-show="!open"
+      class='w-full flex flex-wrap'>
+    
+      @isset($artists_search)
+
+        @foreach($artists_search as $artist_search)
+
+          <button
+            wire:click="edit({{$artist_search->id}})"
+            class='m-2 p-2 rounded-lg border border-black'>
+            {{$artist_search->name}}
+          </button>
+
+        @endforeach
+
+      @endisset
+
+    </div>
+
+  @else
+
+    <div
+      x-show="!open"
+      class='w-10/12 mx-auto flex flex-col justify-center items-center max-w-lg'>
 
       <input
-        class='m-2 rounded-lg border border-black p-2 w-10/12 max-w-lg'
+        class='m-2 rounded-lg border border-black p-2 w-full'
+        type='number'
+        hidden
+        wire:model="artist_result_id">
+
+      <input
+        class='my-2 mx-auto rounded-lg border border-black p-2 w-full'
         type='text'
-        value='{{$artist_search->name}}'>
+        wire:model="artist_result_name">
 
       <label
-        class='my-2 w-10/12 flex justify-center items-center'
-        for="artist_influences_{{$artist_search->id}}">
+        class='my-2 w-full flex justify-center items-center'>
         Influences:</label>
 
       <select
         multiple
         size=10
-        class='m-2 w-10/12 max-w-lg'
-        id='artist_influences_{{$artist_search->id}}'>
+        wire:model="edit_influences"
+        class='my-2 w-full'>
+
         @isset($artists_all)
           @foreach($artists_all as $artist_all)
-            <option
-            
-            @foreach($influences as $in)
-              @if($in->artist_id === $artist_search->id &&
-                  $in->influence_id === $artist_all->id)
-                selected
-              @endif
-            @endforeach
-            
-            value='{{$artist_all->id}}'>{{$artist_all->name}}</option>
+            <option value='{{$artist_all->id}}'>{{$artist_all->name}}</option>
           @endforeach
         @endisset
       </select>
 
       <label
-        class='my-2 w-10/12 flex justify-center items-center'
-        for="artist_similar_{{$artist_search->id}}">
+        class='my-2 w-full flex justify-center items-center'>
         Similar:</label>
 
       <select
         multiple
         size=10
-        class='m-2 w-10/12 max-w-lg'
-        id='artist_similar_{{$artist_search->id}}'>
+        wire:model="edit_similar"
+        class='my-2 mx-auto w-full'>
         @isset($artists_all)
           @foreach($artists_all as $artist_all)
-            <option
-            
-            @foreach($similar as $sim)
-              @if($sim->artist_id === $artist_search->id &&
-                  $sim->similar_id === $artist_all->id)
-                selected
-              @endif
-            @endforeach
-            
-            value='{{$artist_all->id}}'>{{$artist_all->name}}</option>
+            <option value='{{$artist_all->id}}'>{{$artist_all->name}}</option>
           @endforeach
         @endisset
       </select>
 
       <div
-        class='w-10/12 flex flex-row justify-center items-center my-2'>
+        class='w-full flex flex-row justify-center items-center my-2'>
 
         <button
-          onclick='edit_music_artist({{$artist_search->id}})'
-          class='rounded-lg border border-black w-1/3 mx-2'>
+          class='rounded-lg border border-black w-1/3 mx-2'
+          wire:click="update">
           Update
         </button>
 
         <button
-          onclick='delete_music_artist({{$artist_search->id}})'
-          class='rounded-lg border border-black w-1/3 mx-2'>
+          class='rounded-lg border border-black w-1/3 mx-2'
+          wire:click="delete">
           Delete
         </button>
 
       </div>
       
-    </article>
+    </div>
 
-  @endisset
+  @endif
 
-</section>
+</div>

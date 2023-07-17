@@ -26,6 +26,32 @@ class AuthorModel extends Model
     return $collection = DB::table($this->artists)
       ->select()
       ->where('hidden', '=', 0)
+      ->orderBy('name', 'asc')
+      ->get();
+  }
+
+  public function GetArtistById(int $artist_id)
+  {
+    return $collection[0] = DB::table($this->artists)
+      ->select()
+      ->where('hidden', '=', 0)
+      ->where('id', '=', $artist_id)
+      ->first();
+  }
+
+  public function GetInfluencesByArtist(int $artist_id)
+  {
+    return $collection = DB::table($this->influences)
+      ->select()
+      ->where('artist_id', '=', $artist_id)
+      ->get();
+  }
+
+  public function GetSimilarsByArtist(int $artist_id)
+  {
+    return $collection = DB::table($this->similars)
+      ->select()
+      ->where('artist_id', '=', $artist_id)
       ->get();
   }
 
@@ -743,10 +769,23 @@ class AuthorModel extends Model
 
   public function SearchArtists(string $value)
   {
-    return $collection = DB::table($this->artists)
+    if($value === '')
+    {
+      return $collection = DB::table($this->artists)
+      ->select()
+      ->where('hidden', '=', 0)
+      ->where('name', 'LIKE', '%'.$value.'%')
+      ->limit(10)
+      ->orderBy('updated_at', 'desc')
+      ->get();
+    }
+    else
+    {
+      return $collection = DB::table($this->artists)
       ->select()
       ->where('hidden', '=', 0)
       ->where('name', 'LIKE', '%'.$value.'%')
       ->get();
+    }
   }
 }
