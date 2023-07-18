@@ -21,6 +21,11 @@ class AuthorController extends Controller
 
   public function render()
   {
+    return view('author.music2',
+    [
+
+    ]);
+
     $artists = $this->model->GetArtists();
     $artists = $artists->sortBy('name');
     $artists = $artists->toArray();

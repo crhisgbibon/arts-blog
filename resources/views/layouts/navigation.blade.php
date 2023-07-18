@@ -22,18 +22,6 @@
             <x-nav-link :href="route('author_music')" :active="request()->routeIs('author_music')">
               {{ __('Auth_Music') }}
             </x-nav-link>
-            <x-nav-link :href="route('author_music_artists')" :active="request()->routeIs('author_music_artists')">
-              {{ __('Auth_Music_Artists') }}
-            </x-nav-link>
-            <x-nav-link :href="route('author_music_records')" :active="request()->routeIs('author_music_records')">
-              {{ __('Auth_Music_Records') }}
-            </x-nav-link>
-            <x-nav-link :href="route('author_music_tracks')" :active="request()->routeIs('author_music_tracks')">
-              {{ __('Auth_Music_Tracks') }}
-            </x-nav-link>
-            <x-nav-link :href="route('author_music_tags')" :active="request()->routeIs('author_music_tags')">
-              {{ __('Auth_Music_Tags') }}
-            </x-nav-link>
           @endcan
           
         </div>
