@@ -63,6 +63,15 @@ class AuthorModel extends Model
       ->get();
   }
 
+  public function GetRecordById(int $artist_id)
+  {
+    return $collection[0] = DB::table($this->records)
+      ->select()
+      ->where('hidden', '=', 0)
+      ->where('id', '=', $artist_id)
+      ->first();
+  }
+
   public function GetTracks()
   {
     return $collection = DB::table($this->tracks)
@@ -787,5 +796,38 @@ class AuthorModel extends Model
       ->where('name', 'LIKE', '%'.$value.'%')
       ->get();
     }
+  }
+
+  public function SearchRecords(string $value)
+  {
+    if($value === '')
+    {
+      return $collection = DB::table($this->records)
+      ->select()
+      ->where('hidden', '=', 0)
+      ->where('name', 'LIKE', '%'.$value.'%')
+      ->limit(10)
+      ->orderBy('updated_at', 'desc')
+      ->get();
+    }
+    else
+    {
+      return $collection = DB::table($this->records)
+      ->select()
+      ->where('hidden', '=', 0)
+      ->where('name', 'LIKE', '%'.$value.'%')
+      ->get();
+    }
+  }
+
+  public function GetTagsByReference(int $ref_type, int $ref_id)
+  {
+    return $collection = DB::table($this->tags)
+      ->join($this->tag_references, $this->tag_references.'.id', '=', $this->tags.'.tag_id')
+      ->select($this->tags.'.*', $this->tag_references.'.name')
+      ->where($this->tags.'.hidden', '=', 0)
+      ->where($this->tags.'.ref_type', '=', $ref_type)
+      ->where($this->tags.'.ref_id', '=', $ref_id)
+      ->get();
   }
 }
