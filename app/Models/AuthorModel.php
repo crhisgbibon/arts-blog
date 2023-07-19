@@ -80,12 +80,30 @@ class AuthorModel extends Model
       ->get();
   }
 
+  public function GetTrackById(int $track_id)
+  {
+    return $collection = DB::table($this->tracks)
+      ->select()
+      ->where('hidden', '=', 0)
+      ->where('id', '=', $track_id)
+      ->first();
+  }
+
   public function GetTagReferences()
   {
     return $collection = DB::table($this->tag_references)
       ->select()
       ->where('hidden', '=', 0)
       ->get();
+  }
+
+  public function GetTagById(int $tag_id)
+  {
+    return $collection = DB::table($this->tag_references)
+      ->select()
+      ->where('hidden', '=', 0)
+      ->where('id', '=', $tag_id)
+      ->first();
   }
 
   public function GetTags()
@@ -829,5 +847,49 @@ class AuthorModel extends Model
       ->where($this->tags.'.ref_type', '=', $ref_type)
       ->where($this->tags.'.ref_id', '=', $ref_id)
       ->get();
+  }
+
+  public function SearchTracks(string $value)
+  {
+    if($value === '')
+    {
+      return $collection = DB::table($this->tracks)
+      ->select()
+      ->where('hidden', '=', 0)
+      ->where('name', 'LIKE', '%'.$value.'%')
+      ->limit(10)
+      ->orderBy('updated_at', 'desc')
+      ->get();
+    }
+    else
+    {
+      return $collection = DB::table($this->tracks)
+      ->select()
+      ->where('hidden', '=', 0)
+      ->where('name', 'LIKE', '%'.$value.'%')
+      ->get();
+    }
+  }
+
+  public function SearchTags(string $value)
+  {
+    if($value === '')
+    {
+      return $collection = DB::table($this->tag_references)
+      ->select()
+      ->where('hidden', '=', 0)
+      ->where('name', 'LIKE', '%'.$value.'%')
+      ->limit(10)
+      ->orderBy('updated_at', 'desc')
+      ->get();
+    }
+    else
+    {
+      return $collection = DB::table($this->tag_references)
+      ->select()
+      ->where('hidden', '=', 0)
+      ->where('name', 'LIKE', '%'.$value.'%')
+      ->get();
+    }
   }
 }
