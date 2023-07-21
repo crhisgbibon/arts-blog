@@ -20,6 +20,12 @@
         +
       </button>
 
+      <button
+        class='m-2 py-2 px-4 rounded-lg border border-black'
+        wire:click="create">
+        >>>
+      </button>
+
     </div>
 
   </div>

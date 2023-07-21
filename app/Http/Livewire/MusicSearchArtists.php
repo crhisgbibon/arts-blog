@@ -27,7 +27,7 @@ class MusicSearchArtists extends Component
   public $artists_all;
   public $influences;
   public $similar;
-  
+
   public $create_influences;
   public $create_similar;
 
@@ -88,6 +88,8 @@ class MusicSearchArtists extends Component
       (int)$id,
       (array)$this->create_similar
     );
+
+    $this->search();
   }
 
   public function update()
