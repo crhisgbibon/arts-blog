@@ -84,11 +84,13 @@
 
         @foreach($artists_search as $artist_search)
 
-          <button
-            wire:click="edit({{$artist_search->id}})"
-            class='m-2 p-2 rounded-lg border border-black'>
-            {{$artist_search->name}}
-          </button>
+          @if(isset($artist_search->id))
+            <button
+              wire:click="edit({{$artist_search->id}})"
+              class='m-2 p-2 rounded-lg border border-black'>
+              {{$artist_search->name}}
+            </button>
+          @endif
 
         @endforeach
 
