@@ -28,12 +28,6 @@
     x-show="open"
     class='w-full flex flex-col justify-center items-center'>
 
-    <input
-      class='my-2 mx-auto rounded-lg border border-black p-2 w-10/12 max-w-lg'
-      wire:model="create_name"
-      type='text'
-      value=''>
-
     <label
       class='my-2 w-10/12 flex justify-center items-center'>
       Influences:</label>

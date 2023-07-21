@@ -27,8 +27,7 @@ class MusicSearchArtists extends Component
   public $artists_all;
   public $influences;
   public $similar;
-
-  public $create_name;
+  
   public $create_influences;
   public $create_similar;
 
@@ -78,7 +77,7 @@ class MusicSearchArtists extends Component
 
   public function create()
   {
-    $id = $this->model->create_music_artist($this->create_name);
+    $id = $this->model->create_music_artist($this->input);
 
     $outcome1 = $this->model->add_influences(
       (int)$id,
