@@ -49,6 +49,7 @@ class MusicController extends Controller
   {
     $artist = $this->model->GetArtistById($artist_id);
     $records = $this->model->GetRecordsByArtist($artist_id);
+    $records = $records->sortBy('release_year');
 
     $influences = $this->model->GetInfluencesByArtist($artist_id);
     $influenced = $this->model->GetInfluencedByArtist($artist_id);
