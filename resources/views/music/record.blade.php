@@ -8,7 +8,7 @@
 
       <a
         class='m-2 font-bold w-full sm:w-1/3 flex justify-center sm:justify-start items-center'
-        href='/music/{{$artist->id}}'>
+        href='/{{$artist->id}}'>
         {{$artist->name}}</a>
 
       <p
@@ -16,7 +16,7 @@
         {{$record->name}}</p>
 
       <a
-        href='/music/year/{{$record->release_year}}'
+        href='/year/{{$record->release_year}}'
         class='m-2 font-bold w-full sm:w-1/3 flex justify-center sm:justify-start sm:justify-end items-center'>
         {{$record->release_year}}</a>
 
@@ -81,7 +81,7 @@
     
             <a
               class='flex justify-start items-center w-full'
-              href='/music/{{$artist->id}}/{{$record->id}}/{{$track->id}}'>
+              href='/{{$artist->id}}/{{$record->id}}/{{$track->id}}'>
               {{$track->name}}</a>
 
             <div
@@ -122,7 +122,7 @@
             class='flex flex-row justify-start items-center my-2 mx-4 w-full'>
 
             <a
-              href='/music/tags/{{$tag->tag_id}}'
+              href='/tags/{{$tag->tag_id}}'
               class='mr-2'>
               {{$tag->name}}
             </a>

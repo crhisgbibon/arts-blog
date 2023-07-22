@@ -14,7 +14,7 @@
 
         <a
           class='m-4 p-4'
-          href='/music/tags/{{$tag->id}}'>
+          href='/tags/{{$tag->id}}'>
           {{$tag->name}}
         </a>
 

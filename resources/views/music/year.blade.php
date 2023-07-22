@@ -14,7 +14,7 @@
 
       <a
         class='my-2'
-        href='/music/{{$record->artist_id}}/{{$record->id}}'>
+        href='/{{$record->artist_id}}/{{$record->id}}'>
         {{$record->name}}
       </a>
 

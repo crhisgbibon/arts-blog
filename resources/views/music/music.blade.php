@@ -55,7 +55,7 @@
 
           <a
             class='m-2 p-2 flex justify-start items-center w-10/12'
-            href='/music/{{$artist->id}}'>
+            href='/{{$artist->id}}'>
             {{$artist->name}}
           </a>
 
@@ -91,7 +91,7 @@
 
             <a
               class='m-2 p-2 flex justify-start items-center w-10/12'
-              href='/music/{{$record->artist_id}}/{{$record->id}}'>
+              href='/{{$record->artist_id}}/{{$record->id}}'>
               {{$record->name}}
             </a>
 
@@ -127,7 +127,7 @@
 
             <a
               class='m-2 p-2 flex justify-start items-center w-10/12'
-              href='/music/{{$track->artist_id}}/{{$track->record_id}}/{{$track->id}}'>
+              href='/{{$track->artist_id}}/{{$track->record_id}}/{{$track->id}}'>
               {{$track->name}}
             </a>
 

@@ -21,7 +21,7 @@
 
           <a
             class='my-2'
-            href='/music/{{$artist->id}}'>
+            href='/{{$artist->id}}'>
             {{$artist->name}}
           </a>
 
@@ -44,7 +44,7 @@
 
           <a
             class='my-2'
-            href='/music/{{$record->artist_id}}/{{$record->id}}'>
+            href='/{{$record->artist_id}}/{{$record->id}}'>
             {{$record->name}}
           </a>
 
@@ -67,7 +67,7 @@
 
           <a
             class='my-2'
-            href='/music/{{$track->artist_id}}/{{$track->record_id}}/{{$track->id}}'>
+            href='/{{$track->artist_id}}/{{$track->record_id}}/{{$track->id}}'>
             {{$track->name}}
           </a>
 

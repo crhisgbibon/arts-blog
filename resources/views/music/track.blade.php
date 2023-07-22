@@ -17,16 +17,16 @@
 
       <a
         class='m-2 font-bold w-full sm:w-1/3 flex justify-center sm:justify-start items-center'
-        href='/music/{{$artist->id}}'>
+        href='/{{$artist->id}}'>
         {{$artist->name}}</a>
 
       <a
-        href='/music/{{$artist->id}}/{{$record->id}}'
+        href='/{{$artist->id}}/{{$record->id}}'
         class='m-2 font-bold w-full sm:w-1/3 flex justify-center sm:justify-center items-center'>
         {{$record->name}}</a>
 
       <a
-        href='/music/year/{{$record->release_year}}'
+        href='/year/{{$record->release_year}}'
         class='m-2 font-bold w-full sm:w-1/3 flex justify-center sm:justify-end items-center'>
         {{$record->release_year}}</a>
 

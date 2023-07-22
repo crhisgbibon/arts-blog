@@ -14,7 +14,7 @@
 
         <a
           class='m-4 p-4'
-          href='/music/letter/{{$letter}}'>
+          href='/letter/{{$letter}}'>
           {{$letter}}
         </a>
 

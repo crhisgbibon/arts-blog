@@ -25,7 +25,7 @@
 
           <a
             class='mx-2 w-full'
-            href='/music/{{$artist->id}}/{{$record->id}}'>
+            href='/{{$artist->id}}/{{$record->id}}'>
             {{$record->name}}</a>
 
           <div
@@ -45,7 +45,7 @@
 
           <a
             class='mx-2 flex justify-end items-center'
-            href='/music/year/{{$record->release_year}}'>
+            href='/year/{{$record->release_year}}'>
             {{$record->release_year}}</a>
 
         </div>
@@ -70,7 +70,7 @@
 
             <a
               class='m-2 w-full flex justify-start items-center'
-              href='/music/{{$influence->id}}'>
+              href='/{{$influence->id}}'>
               {{$influence->name}}</a>
 
           @endforeach
@@ -92,7 +92,7 @@
 
             <a
               class='m-2 w-full flex justify-start items-center'
-              href='/music/{{$influence->id}}'>
+              href='/{{$influence->id}}'>
               {{$influence->name}}</a>
 
           @endforeach
@@ -114,7 +114,7 @@
 
             <a
               class='m-2 w-full flex justify-start items-center'
-              href='/music/{{$similar->id}}'>
+              href='/{{$similar->id}}'>
               {{$similar->name}}</a>
 
           @endforeach

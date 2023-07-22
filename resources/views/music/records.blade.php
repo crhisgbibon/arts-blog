@@ -25,7 +25,7 @@
         <a
           data-value='{{$record->name}}'
           class='search m-4 p-4'
-          href='/music/{{$record->artist_id}}/{{$record->id}}'>
+          href='/{{$record->artist_id}}/{{$record->id}}'>
           {{$record->name}}
         </a>
 

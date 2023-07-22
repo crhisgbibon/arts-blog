@@ -9,7 +9,7 @@
     </h1>
 
     <a
-      href='/music/stars'
+      href='/stars'
       class='flex justify-center items-center m-2 p-2 font-bold'>
       Stars
     </a>
@@ -25,7 +25,7 @@
 
         <a
           class='m-4 p-4'
-          href='/music/{{$record->artist_id}}/{{$record->id}}'>
+          href='/{{$record->artist_id}}/{{$record->id}}'>
           {{$record->name}}
         </a>
 
