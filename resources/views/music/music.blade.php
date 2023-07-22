@@ -4,7 +4,7 @@
     class='w-full flex flex-col sm:flex-row justify-around items-center sm:items-start max-w-6xl mx-auto'>
 
     <section
-      class='flex flex-col justify-start items-center w-10/12 sm:w-1/3 mx-2'>
+      class='flex flex-col justify-start items-center w-10/12 sm:w-1/3 mx-2 mb-4'>
 
       <x-nav-link
         class='my-4 font-bold'
@@ -40,7 +40,7 @@
     </section>
 
     <section
-      class='flex flex-col justify-start items-center w-10/12 sm:w-1/3 mx-2'>
+      class='flex flex-col justify-start items-center w-10/12 sm:w-1/3 mx-2 mb-4'>
 
       <x-nav-link
         class='my-4 font-bold'
@@ -76,7 +76,7 @@
     </section>
 
     <section
-      class='flex flex-col justify-start items-center w-10/12 sm:w-1/3 mx-2'>
+      class='flex flex-col justify-start items-center w-10/12 sm:w-1/3 mx-2 mb-4'>
 
       <x-nav-link
         class='my-4 font-bold'
