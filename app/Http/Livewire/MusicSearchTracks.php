@@ -31,12 +31,16 @@ class MusicSearchTracks extends Component
   public $records;
   public $tracks;
 
+  public $create_filter_artist;
+  public $create_filter_record;
   public $create_artist_id;
   public $create_record_id;
   public $create_position;
   public $create_name;
   public $create_stars;
   public $create_review;
+
+  public $existing = [];
 
   public function mount()
   {
@@ -73,6 +77,34 @@ class MusicSearchTracks extends Component
     $this->result_review = $result->review;
   }
 
+  public function create_filter_artist()
+  {
+    foreach($this->artists as $artist)
+    {
+      if((string)$artist['name'] === (string)$this->create_filter_artist)
+      {
+        $this->create_artist_id = (int)$artist['id'];
+      }
+    }
+  }
+
+  public function create_filter_record()
+  {
+    foreach($this->records as $record)
+    {
+      if((string)$record['name'] === (string)$this->create_filter_record)
+      {
+        $this->create_record_id = (int)$record['id'];
+        $this->FillExisting();
+      }
+    }
+  }
+
+  public function FillExisting()
+  {
+    $this->existing = $this->model->SearchTracksById((int)$this->create_record_id);
+  }
+
   public function create()
   {
     $id = $this->model->create_music_track(
@@ -83,6 +115,7 @@ class MusicSearchTracks extends Component
       (int)$this->create_stars,
       (string)$this->create_review,
     );
+    $this->FillExisting();
   }
 
   public function update()

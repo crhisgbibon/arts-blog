@@ -890,6 +890,15 @@ class AuthorModel extends Model
     }
   }
 
+  public function SearchTracksById(int $record_id)
+  {
+    return $collection = DB::table($this->tracks)
+    ->select()
+    ->where('hidden', '=', 0)
+    ->where('record_id', '=', $record_id)
+    ->get();
+  }
+
   public function SearchTags(string $value)
   {
     if($value === '')

@@ -28,56 +28,142 @@
     x-show="open"
     class='w-full flex flex-col justify-center items-center'>
 
-    <select
-      size=5
-      class='rounded-lg m-2 w-10/12 max-w-lg'
-      wire:model="create_artist_id">
-      @isset($artists)
-        @foreach($artists as $artist)
-          <option value='{{$artist->id}}'>{{$artist->name}}</option>
-        @endforeach
-      @endisset
-    </select>
+    <div
+      class='flex flex-col justify-start items-center w-full'>
 
-    <select
-      size=5
-      class='rounded-lg m-2 w-10/12 max-w-lg'
-      wire:model="create_record_id">
-      @isset($records)
-        @foreach($records as $record)
-          @if($record->id === $create_artist_id)
-            <option value='{{$record->id}}'>{{$record->name}}</option>
+      <label
+        class='mx-2'
+        for='create_artist_id'>
+        Artist:</label>
+
+      <input
+        class='mx-2 rounded-lg border border-black p-2 w-10/12 max-w-lg'
+        wire:model="create_filter_artist"
+        wire:keyup="create_filter_artist"
+        type='text'>
+
+      <select
+        size=5
+        class='rounded-lg m-2 w-10/12 max-w-lg'
+        wire:model="create_artist_id">
+        @isset($artists)
+          @foreach($artists as $artist)
+            <option value='{{$artist->id}}'>{{$artist->name}}</option>
+          @endforeach
+        @endisset
+      </select>
+
+    </div>
+
+    <div
+      class='flex flex-col justify-start items-center w-full'>
+
+      <label
+        class='mx-2'
+        for='create_record_id'>
+        Record:</label>
+
+      <input
+        class='mx-2 rounded-lg border border-black p-2 w-10/12 max-w-lg'
+        wire:model="create_filter_record"
+        wire:keyup="create_filter_record"
+        type='text'>
+
+      <select
+        size=5
+        class='rounded-lg m-2 w-10/12 max-w-lg'
+        wire:change="FillExisting"
+        wire:model="create_record_id">
+        @isset($records)
+          @foreach($records as $record)
+            @if($record->id === (int)$create_artist_id)
+              <option value='{{$record->id}}'>{{$record->name}}</option>
+            @endif
+          @endforeach
+        @endisset
+      </select>
+
+    </div>
+
+    <div
+      class='flex flex-col justify-start items-center'>
+      @isset($existing)
+        @foreach($existing as $exists)
+          @if(is_array($exists))
+            <div>{{$exists['pos']}} - {{$exists['name']}} - {{$exists['stars']}}</div>
+          @else
+            <div>{{$exists->pos}} - {{$exists->name}} - {{$exists->stars}}</div>
           @endif
         @endforeach
       @endisset
-    </select>
+    </div>
 
-    <input
-      wire:model="create_position"
-      class='mx-2 rounded-lg border border-black p-2  m-2 w-10/12'
-      type='number'
-      min=1
-      step=1>
+    <div
+      class='flex flex-row justify-center items-center w-full max-w-lg'>
 
-    <input
-      class='my-2 mx-auto rounded-lg border border-black p-2 w-10/12 max-w-lg'
-      wire:model="create_name"
-      type='text'
-      value=''>
+      <label
+        class='mx-2'
+        for='create_position'>
+        Position:</label>
 
-    <input
-      wire:model="create_stars"
-      class='mx-2 rounded-lg border border-black p-2  m-2 w-10/12'
-      type='number'
-      min=1
-      max=5
-      step=1>
+        <input
+        wire:model="create_position"
+        class='mx-2 rounded-lg border border-black p-2  m-2 w-10/12'
+        type='number'
+        min=1
+        step=1>
 
-    <textarea
-      wire:model="create_review"
-      class='mx-2 rounded-lg border border-black p-2  m-2 w-10/12'
-      maxLength=6666
-      rows="4" cols="50"></textarea>
+    </div>
+
+    <div
+      class='flex flex-row justify-center items-center w-full max-w-lg'>
+
+      <label
+        class='mx-2'
+        for='create_name'>
+        Name:</label>
+
+      <input
+        class='my-2 mx-auto rounded-lg border border-black p-2 w-10/12 max-w-lg'
+        wire:model="create_name"
+        type='text'
+        value=''>
+
+    </div>
+
+    <div
+      class='flex flex-row justify-center items-center w-full max-w-lg'>
+
+      <label
+        class='mx-2'
+        for='create_stars'>
+        Stars:</label>
+
+      <input
+        wire:model="create_stars"
+        class='mx-2 rounded-lg border border-black p-2  m-2 w-10/12'
+        type='number'
+        min=1
+        max=5
+        step=1>
+
+    </div>
+
+    <div
+      class='flex flex-col justify-start items-center w-full max-w-lg'>
+
+      <label
+        class='mx-2'
+        for='create_review'>
+        Review:</label>
+
+      <textarea
+        wire:model="create_review"
+        class='mx-2 rounded-lg border border-black p-2  m-2 w-10/12'
+        maxLength=6666
+        rows="4" cols="50"></textarea>
+
+    </div>
 
     <div
       class='w-10/12 flex flex-row justify-center items-center my-2 max-w-lg'>
