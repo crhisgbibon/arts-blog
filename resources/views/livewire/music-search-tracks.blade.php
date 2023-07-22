@@ -76,7 +76,7 @@
         wire:model="create_record_id">
         @isset($records)
           @foreach($records as $record)
-            @if($record->id === (int)$create_artist_id)
+            @if($record->artist_id === (int)$create_artist_id)
               <option value='{{$record->id}}'>{{$record->name}}</option>
             @endif
           @endforeach
