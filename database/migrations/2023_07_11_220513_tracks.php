@@ -15,7 +15,7 @@ return new class extends Migration
       $table->integer('pos');
       $table->string('name', 255);
       $table->integer('stars');
-      $table->string('review', 1000);
+      $table->string('review', 6666);
       $table->boolean('hidden');
       $table->timestamps();
     });

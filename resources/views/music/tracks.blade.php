@@ -1,7 +1,7 @@
 <x-layout>
 
   <h1
-    class='w-full flex flex-col sm:flex-row justify-center items-center m-2 p-2'>
+    class='w-full flex flex-col sm:flex-row justify-center items-center my-2 py-2'>
 
     <p
       class='m-2 p-2 font-bold'>
@@ -16,7 +16,7 @@
   </h1>
 
   <section
-    class='w-full h-full flex flex-wrap m-2 p-2'>
+    class='w-full h-full flex flex-wrap my-2 py-2'>
 
     @isset($tracks)
 

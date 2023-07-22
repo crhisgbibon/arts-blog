@@ -76,7 +76,7 @@
     <textarea
       wire:model="create_review"
       class='mx-2 rounded-lg border border-black p-2  m-2 w-10/12'
-      maxLength=1000
+      maxLength=6666
       rows="4" cols="50"></textarea>
 
     <div
@@ -168,7 +168,7 @@
       <textarea
         wire:model="result_review"
         class='mx-2 rounded-lg border border-black p-2  m-2 w-10/12'
-        maxLength=1000
+        maxLength=6666
         rows="4" cols="50"></textarea>
 
       <div

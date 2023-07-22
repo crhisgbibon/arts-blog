@@ -8,71 +8,67 @@ use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MusicController;
 
-Route::controller(HomeController::class)->group(function () {
+Route::controller(MusicController::class)->group(function () {
   Route::get('/', 'index')
     ->name('home');
 });
 
 Route::controller(MusicController::class)->group(function () {
-  Route::get('/music', 'index')
-    ->name('music');
 
-
-
-  Route::get('/music/tags', 'tags')
+  Route::get('/tags', 'tags')
     ->name('music_tags');
 
-  Route::get('/music/tags/{tag}', 'tag')
+  Route::get('/tags/{tag}', 'tag')
     ->where('tag', '[0-9]+')
     ->name('music_tag');
 
 
 
-  Route::get('/music/letter/', 'letters')
+  Route::get('/letter', 'letters')
     ->name('music_letters');
   
-  Route::get('/music/letter/{letter}', 'letter')
+  Route::get('/letter/{letter}', 'letter')
     ->where('letter', '[a-z-]+')
     ->name('music_letter');
 
 
 
-  Route::get('/music/year/', 'years')
+  Route::get('/year', 'years')
     ->name('music_years');
 
-  Route::get('/music/year/{year}', 'year')
+  Route::get('/year/{year}', 'year')
     ->where('year', '[0-9]+')
     ->name('music_year');
 
 
 
-  Route::get('/music/stars', 'stars')
+  Route::get('/stars', 'stars')
     ->name('music_stars');
 
-  Route::get('/music/stars/{star}', 'star')
+  Route::get('/stars/{star}', 'star')
     ->where('star', '[1-5]+')
     ->name('music_star');
 
 
 
-  Route::get('/music/artists', 'artists')
+  Route::get('/artists', 'artists')
     ->name('music_artists');
 
-  Route::get('/music/records', 'records')
+  Route::get('/records', 'records')
     ->name('music_records');
 
-  Route::get('/music/tracks', 'tracks')
+  Route::get('/tracks', 'tracks')
     ->name('music_tracks');
 
-  Route::get('/music/{artist}', 'artist')
+  Route::get('/{artist}', 'artist')
     ->where('artist', '[0-9]+')
     ->name('music_artist');
 
-  Route::get('/music/{artist}/{record}', 'record')
+  Route::get('/{artist}/{record}', 'record')
     ->where(['artist' => '[0-9]+', 'record' => '[0-9]+'])
     ->name('music_record');
 
-  Route::get('/music/{artist}/{record}/{track}', 'track')
+  Route::get('/{artist}/{record}/{track}', 'track')
     ->where(['artist' => '[0-9]+', 'record' => '[0-9]+', 'track' => '[0-9]+'])
     ->name('music_track');
 });

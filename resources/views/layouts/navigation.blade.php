@@ -4,18 +4,34 @@
     <div class="flex justify-between h-12">
       <div class="flex">
 
-        <div class="shrink-0 flex items-center">
-          <a
-            class='hover:cursor-pointer'
-            href="/">
-            {{ __('Apanthrope') }}
-          </a>
-        </div>
+        <x-nav-link
+          class='text-6xl mx-2'
+          :href="route('home')"
+          :active="request()->routeIs('home')">
+          <x-application-logo class='w-10/12 h-10/12'></x-application-logo>
+        </x-nav-link>
 
         <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
 
-          <x-nav-link :href="route('music')" :active="request()->routeIs('music')">
-            {{ __('Music') }}
+          <x-nav-link
+            class='mx-2'
+            :href="route('music_artists')"
+            :active="request()->routeIs('music_artists')">
+            {{ __('Artists') }}
+          </x-nav-link>
+
+          <x-nav-link
+            class='mx-2'
+            :href="route('music_records')"
+            :active="request()->routeIs('music_records')">
+            {{ __('Records') }}
+          </x-nav-link>
+
+          <x-nav-link
+            class='mx-4'
+            :href="route('music_tracks')"
+            :active="request()->routeIs('music_tracks')">
+            {{ __('Tracks') }}
           </x-nav-link>
 
           @can('is_admin')
@@ -87,8 +103,20 @@
 
     <div class="pt-2 pb-3 space-y-1">
 
-      <x-responsive-nav-link :href="route('music')" :active="request()->routeIs('music')">
-        {{ __('Music') }}
+      <x-responsive-nav-link :href="route('home')" :active="request()->routeIs('home')">
+        {{ __('Home') }}
+      </x-responsive-nav-link>
+
+      <x-responsive-nav-link :href="route('music_artists')" :active="request()->routeIs('music_artists')">
+        {{ __('Artists') }}
+      </x-responsive-nav-link>
+
+      <x-responsive-nav-link :href="route('music_records')" :active="request()->routeIs('music_records')">
+        {{ __('Records') }}
+      </x-responsive-nav-link>
+
+      <x-responsive-nav-link :href="route('music_tracks')" :active="request()->routeIs('music_tracks')">
+        {{ __('Tracks') }}
       </x-responsive-nav-link>
 
       @can('is_admin')

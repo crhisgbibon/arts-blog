@@ -3,24 +3,33 @@
   <section
     class='w-full flex flex-row justify-around items-center my-2'>
 
-    <a
-      href='/music/letter'
-      class='w-full flex justify-center items-center font-bold'>
-      A-Z</a>
+    <x-nav-link
+      class='w-full flex justify-center items-center font-bold'
+      :href="route('music_letters')"
+      :active="request()->routeIs('music_letters')">
+      {{ __('A-Z') }}
+    </x-nav-link>
 
-    <a
-      href='/music/stars'
-      class='w-full flex justify-center items-center font-bold'>
-      Stars</a>
+    <x-nav-link
+      class='w-full flex justify-center items-center font-bold'
+      :href="route('music_stars')"
+      :active="request()->routeIs('music_stars')">
+      {{ __('Stars') }}
+    </x-nav-link>
 
-    <a
-      href='/music/tags'
-      class='w-full flex justify-center items-center font-bold'>
-      Tags</a>
+    <x-nav-link
+      class='w-full flex justify-center items-center font-bold'
+      :href="route('music_tags')"
+      :active="request()->routeIs('music_tags')">
+      {{ __('Tags') }}
+    </x-nav-link>
 
-    <a
-      href='/music/year'
-      class='w-full flex justify-center items-center font-bold'>Years</a>
+    <x-nav-link
+      class='w-full flex justify-center items-center font-bold'
+      :href="route('music_years')"
+      :active="request()->routeIs('music_years')">
+      {{ __('Years') }}
+    </x-nav-link>
 
   </section>
 
@@ -30,10 +39,12 @@
     <section
       class='flex flex-col justify-start items-center w-10/12 sm:w-1/3 mx-2'>
 
-      <a
-        href='/music/artists'
-        class='my-4 font-bold'>
-        Artists</a>
+      <x-nav-link
+        class='my-4 font-bold'
+        :href="route('music_artists')"
+        :active="request()->routeIs('music_artists')">
+        {{ __('Artists') }}
+      </x-nav-link>
 
       @isset($artists)
 
@@ -64,10 +75,12 @@
     <section
       class='flex flex-col justify-start items-center w-10/12 sm:w-1/3 mx-2'>
 
-      <a
-        href='/music/records'
-        class='my-4 font-bold'>
-        Records</a>
+      <x-nav-link
+        class='my-4 font-bold'
+        :href="route('music_records')"
+        :active="request()->routeIs('music_records')">
+        {{ __('Records') }}
+      </x-nav-link>
 
       @isset($records)
 
@@ -98,10 +111,12 @@
     <section
       class='flex flex-col justify-start items-center w-10/12 sm:w-1/3 mx-2'>
 
-      <a
-        href='music/tracks'
-        class='my-4 font-bold'>
-        Tracks</a>
+      <x-nav-link
+        class='my-4 font-bold'
+        :href="route('music_tracks')"
+        :active="request()->routeIs('music_tracks')">
+        {{ __('Tracks') }}
+      </x-nav-link>
 
       @isset($tracks)
 
