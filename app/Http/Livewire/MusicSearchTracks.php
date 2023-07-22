@@ -86,6 +86,7 @@ class MusicSearchTracks extends Component
         $this->create_artist_id = (int)$artist['id'];
       }
     }
+    $this->records = $this->model->GetRecordById((int)$artist['id']);
   }
 
   public function create_filter_record()

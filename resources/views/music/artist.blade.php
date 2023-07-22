@@ -45,7 +45,7 @@
 
           <a
             class='mx-2 flex justify-end items-center'
-            href='/year/{{$record->release_year}}'>
+            href='/years/{{$record->release_year}}'>
             {{$record->release_year}}</a>
 
         </div>
