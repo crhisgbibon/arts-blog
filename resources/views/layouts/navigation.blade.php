@@ -236,6 +236,16 @@
 
     <div class="pt-2 pb-3 space-y-1">
 
+      <x-responsive-nav-link
+        :href="route('music_blog')"
+        :active="request()->routeIs('music_blog')">
+        {{ __('Blog') }}
+      </x-responsive-nav-link>
+
+    </div>
+
+    <div class="pt-2 pb-3 space-y-1">
+
       @can('is_admin')
 
         <x-responsive-nav-link
