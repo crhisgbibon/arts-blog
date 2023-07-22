@@ -269,4 +269,14 @@ class MusicController extends Controller
       'records' => $records,
     ]);
   }
+
+  public function blog()
+  {
+    $entries = $this->model->GetBlogs();
+
+    return view('music.blog',
+    [
+      'entries' => $entries,
+    ]);
+  }
 }

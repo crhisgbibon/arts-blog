@@ -17,6 +17,7 @@ class MusicModel extends Model
   private string $tag_references = 'music_tag_references';
   private string $influences = 'music_influence';
   private string $similars = 'music_similar';
+  private string $blog = 'music_blog';
   
   // ARTISTS
 
@@ -369,5 +370,13 @@ class MusicModel extends Model
   private function is_symbolic($char)
   {
     return preg_match('/^[^\w\s]$/', $char);
+  }
+
+  public function GetBlogs()
+  {
+    return $collection = DB::table($this->blog)
+      ->where('hidden', '=', 0)
+      ->orderBy('updated_at', 'desc')
+      ->get();
   }
 }

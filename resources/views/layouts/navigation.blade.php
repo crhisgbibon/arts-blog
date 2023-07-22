@@ -2,41 +2,91 @@
 
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex justify-between h-12">
-      <div class="flex">
+      <div class="flex flex-row justify-start items-center h-full">
 
         <x-nav-link
-          class='text-6xl mx-2'
+          class='text-6xl mx-2 h-full'
           :href="route('home')"
           :active="request()->routeIs('home')">
           <x-application-logo class='w-10/12 h-10/12'></x-application-logo>
         </x-nav-link>
 
-        <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+        <div class="hidden sm:flex h-full mx-2">
 
           <x-nav-link
-            class='mx-2'
+            class='mx-2 h-full'
             :href="route('music_artists')"
             :active="request()->routeIs('music_artists')">
             {{ __('Artists') }}
           </x-nav-link>
 
           <x-nav-link
-            class='mx-2'
+            class='mx-2 h-full'
             :href="route('music_records')"
             :active="request()->routeIs('music_records')">
             {{ __('Records') }}
           </x-nav-link>
 
           <x-nav-link
-            class='mx-4'
+            class='mx-2 h-full'
             :href="route('music_tracks')"
             :active="request()->routeIs('music_tracks')">
             {{ __('Tracks') }}
           </x-nav-link>
+          
+        </div>
+
+        <div class="hidden md:flex h-full mx-2">
+
+          <x-nav-link
+            class='mx-2 h-full'
+            :href="route('music_letters')"
+            :active="request()->routeIs('music_letters')">
+            {{ __('A-Z') }}
+          </x-nav-link>
+
+          <x-nav-link
+            class='mx-2 h-full'
+            :href="route('music_stars')"
+            :active="request()->routeIs('music_stars')">
+            {{ __('Stars') }}
+          </x-nav-link>
+
+          <x-nav-link
+            class='mx-2 h-full'
+            :href="route('music_tags')"
+            :active="request()->routeIs('music_tags')">
+            {{ __('Tags') }}
+          </x-nav-link>
+
+          <x-nav-link
+            class='mx-2 h-full'
+            :href="route('music_years')"
+            :active="request()->routeIs('music_years')">
+            {{ __('Years') }}
+          </x-nav-link>
+          
+        </div>
+
+        <div class="hidden md:flex h-full mx-2">
+
+          <x-nav-link
+            class='mx-2 h-full'
+            :href="route('music_blog')"
+            :active="request()->routeIs('music_blog')">
+            {{ __('Blog') }}
+          </x-nav-link>
+          
+        </div>
+
+        <div class="hidden md:flex h-full mx-2">
 
           @can('is_admin')
-            <x-nav-link :href="route('author_music')" :active="request()->routeIs('author_music')">
-              {{ __('Auth_Music') }}
+            <x-nav-link
+              class='mx-2 h-full'
+              :href="route('author_music')"
+              :active="request()->routeIs('author_music')">
+              {{ __('Author') }}
             </x-nav-link>
           @endcan
           
@@ -45,6 +95,7 @@
       </div>
 
       @auth
+      
         <div class="hidden sm:flex sm:items-center sm:ml-6">
           <x-dropdown align="right" width="48">
             <x-slot name="trigger">
@@ -80,6 +131,28 @@
           </x-dropdown>
 
         </div>
+            
+      @else
+
+      <div
+        class='hidden sm:flex flex-row h-full justify-end items-center'>
+
+        <x-nav-link
+          class='mx-2 h-full'
+          :href="route('login')"
+          :active="request()->routeIs('login')">
+          {{ __('Log In') }}
+        </x-nav-link>
+
+        <x-nav-link
+          class='mx-2 h-full'
+          :href="route('register')"
+          :active="request()->routeIs('register')">
+          {{ __('Register') }}
+        </x-nav-link>
+
+      </div>
+
       @endauth
 
       <div class="-mr-2 flex items-center sm:hidden">
@@ -103,26 +176,72 @@
 
     <div class="pt-2 pb-3 space-y-1">
 
-      <x-responsive-nav-link :href="route('home')" :active="request()->routeIs('home')">
+      <x-responsive-nav-link
+        :href="route('home')"
+        :active="request()->routeIs('home')">
         {{ __('Home') }}
       </x-responsive-nav-link>
 
-      <x-responsive-nav-link :href="route('music_artists')" :active="request()->routeIs('music_artists')">
+    </div>
+
+    <div class="pt-2 pb-3 space-y-1">
+
+      <x-responsive-nav-link
+        :href="route('music_artists')"
+        :active="request()->routeIs('music_artists')">
         {{ __('Artists') }}
       </x-responsive-nav-link>
 
-      <x-responsive-nav-link :href="route('music_records')" :active="request()->routeIs('music_records')">
+      <x-responsive-nav-link
+        :href="route('music_records')"
+        :active="request()->routeIs('music_records')">
         {{ __('Records') }}
       </x-responsive-nav-link>
 
-      <x-responsive-nav-link :href="route('music_tracks')" :active="request()->routeIs('music_tracks')">
+      <x-responsive-nav-link
+        :href="route('music_tracks')"
+        :active="request()->routeIs('music_tracks')">
         {{ __('Tracks') }}
       </x-responsive-nav-link>
 
+    </div>
+
+    <div class="pt-2 pb-3 space-y-1">
+
+      <x-responsive-nav-link
+        :href="route('music_letters')"
+        :active="request()->routeIs('music_letters')">
+        {{ __('A-Z') }}
+      </x-responsive-nav-link>
+
+      <x-responsive-nav-link
+        :href="route('music_stars')"
+        :active="request()->routeIs('music_stars')">
+        {{ __('Stars') }}
+      </x-responsive-nav-link>
+
+      <x-responsive-nav-link
+        :href="route('music_tags')"
+        :active="request()->routeIs('music_tags')">
+        {{ __('Tags') }}
+      </x-responsive-nav-link>
+
+      <x-responsive-nav-link
+        :href="route('music_years')"
+        :active="request()->routeIs('music_years')">
+        {{ __('Years') }}
+      </x-responsive-nav-link>
+
+    </div>
+
+    <div class="pt-2 pb-3 space-y-1">
+
       @can('is_admin')
 
-        <x-responsive-nav-link :href="route('author_music')" :active="request()->routeIs('author_music')">
-          {{ __('Auth_Music') }}
+        <x-responsive-nav-link
+          :href="route('author_music')"
+          :active="request()->routeIs('author_music')">
+          {{ __('Author') }}
         </x-responsive-nav-link>
 
       @endcan
@@ -130,6 +249,7 @@
     </div>
 
     @auth
+
       <div class="pt-4 pb-1 border-t border-gray-200">
 
         <div class="px-4">
@@ -156,6 +276,31 @@
         </div>
 
       </div>
+    
+    @else
+
+      <div class="pt-4 pb-1 border-t border-gray-200">
+
+        <x-responsive-nav-link
+          :href="route('login')"
+          :active="request()->routeIs('login')">
+          {{ __('Log In') }}
+        </x-responsive-nav-link>
+
+        <x-responsive-nav-link
+          :href="route('register')"
+          :active="request()->routeIs('register')">
+          {{ __('Register') }}
+        </x-responsive-nav-link>
+
+        <x-responsive-nav-link
+          :href="route('password.request')"
+          :active="request()->routeIs('password.request')">
+          {{ __('Reset Password') }}
+        </x-responsive-nav-link>
+
+      </div>
+    
     @endauth
 
   </div>

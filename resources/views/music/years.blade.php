@@ -14,7 +14,7 @@
 
         <a
           class='m-4 p-4'
-          href='/year/{{$year}}'>
+          href='/years/{{$year}}'>
           {{$year}}
         </a>
 

@@ -18,6 +18,7 @@ class AuthorModel extends Model
   private string $tag_references = 'music_tag_references';
   private string $influences = 'music_influence';
   private string $similars = 'music_similar';
+  private string $blog = 'music_blog';
 
   // MUSIC
 
@@ -128,6 +129,15 @@ class AuthorModel extends Model
       ->select()
       ->where('hidden', '=', 0)
       ->get();
+  }
+
+  public function GetBlogById(int $blog_id)
+  {
+    return $collection[0] = DB::table($this->blog)
+      ->select()
+      ->where('hidden', '=', 0)
+      ->where('id', '=', $blog_id)
+      ->first();
   }
 
   public function create_music_artist(
@@ -889,6 +899,120 @@ class AuthorModel extends Model
       ->select()
       ->where('hidden', '=', 0)
       ->where('name', 'LIKE', '%'.$value.'%')
+      ->get();
+    }
+  }
+
+  public function create_music_blog(
+    string $title,
+    string $content,
+    )
+  {
+    $nl2br = nl2br($contents);
+    date_default_timezone_set("Europe/London");
+    $now = date('Y-m-d H:i:s');
+
+    try
+    {
+      $id = DB::table($this->blog)->insertGetId([
+        'title' => $title,
+        'contents' => $nl2br,
+        'hidden' => 0,
+        'created_at' => $now,
+        'updated_at' => $now,
+      ]);
+    }
+    catch(QueryException $e)
+    {
+      $id = -1;
+    }
+
+    return $id;
+  }
+
+  public function edit_music_blog(
+    int $id,
+    string $title,
+    string $contents,
+    )
+  {
+    $nl2br = nl2br($contents);
+    date_default_timezone_set("Europe/London");
+    $now = date('Y-m-d H:i:s');
+
+    try
+    {
+      DB::table($this->blog)
+        ->where('id', $id)
+        ->update([
+          'title' => $title,
+          'contents' => $nl2br,
+        ]);
+
+      $response = [
+        'status' => 'success',
+        'message' => 'Data inserted successfully',
+      ];
+    }
+    catch(QueryException $e)
+    {
+      $response = [
+        'status' => 'error',
+        'message' => 'Error inserting data: ' . $e->getMessage(),
+      ];
+    }
+
+    return response()->json($response);
+  }
+
+  public function delete_music_blog(
+    int $id)
+  {
+    date_default_timezone_set("Europe/London");
+    $now = date('Y-m-d H:i:s');
+    try
+    {
+      DB::table($this->blog)
+        ->where('id', $id)
+        ->update([
+          'hidden' => 1,
+          'updated_at' => $now,
+        ]);
+
+      $response = [
+        'status' => 'success',
+        'message' => 'Data inserted successfully',
+      ];
+    }
+    catch(QueryException $e)
+    {
+      $response = [
+        'status' => 'error',
+        'message' => 'Error inserting data: ' . $e->getMessage(),
+      ];
+    }
+
+    return response()->json($response);
+  }
+
+  public function SearchBlogs(string $value)
+  {
+    if($value === '')
+    {
+      return $collection = DB::table($this->blog)
+      ->select()
+      ->where('hidden', '=', 0)
+      ->where('title', 'LIKE', '%'.$value.'%')
+      ->limit(10)
+      ->orderBy('updated_at', 'desc')
+      ->get();
+    }
+    else
+    {
+      return $collection = DB::table($this->blog)
+      ->select()
+      ->where('hidden', '=', 0)
+      ->where('title', 'LIKE', '%'.$value.'%')
       ->get();
     }
   }

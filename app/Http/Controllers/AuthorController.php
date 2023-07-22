@@ -119,6 +119,19 @@ class AuthorController extends Controller
     ]);
   }
 
+  public function author_music_blog()
+  {
+    if (!Gate::allows('is_admin'))
+    {
+      abort(403);
+    }
+
+    return view('author.blog',
+    [
+
+    ]);
+  }
+
 
 
   public function create_music_artist(Request $request)

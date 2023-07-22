@@ -23,6 +23,11 @@
       class='w-10/12 flex justify-center items-center my-4 rounded-lg py-2 border border-black max-w-md mx-auto'>
       Tags</a>
 
+    <a
+      href='/author_music/blog'
+      class='w-10/12 flex justify-center items-center my-4 rounded-lg py-2 border border-black max-w-md mx-auto'>
+      Blog</a>
+
   </nav>
 
 </x-app-layout>

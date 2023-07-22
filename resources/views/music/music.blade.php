@@ -1,38 +1,5 @@
 <x-layout>
 
-  <section
-    class='w-full flex flex-row justify-around items-center my-2'>
-
-    <x-nav-link
-      class='w-full flex justify-center items-center font-bold'
-      :href="route('music_letters')"
-      :active="request()->routeIs('music_letters')">
-      {{ __('A-Z') }}
-    </x-nav-link>
-
-    <x-nav-link
-      class='w-full flex justify-center items-center font-bold'
-      :href="route('music_stars')"
-      :active="request()->routeIs('music_stars')">
-      {{ __('Stars') }}
-    </x-nav-link>
-
-    <x-nav-link
-      class='w-full flex justify-center items-center font-bold'
-      :href="route('music_tags')"
-      :active="request()->routeIs('music_tags')">
-      {{ __('Tags') }}
-    </x-nav-link>
-
-    <x-nav-link
-      class='w-full flex justify-center items-center font-bold'
-      :href="route('music_years')"
-      :active="request()->routeIs('music_years')">
-      {{ __('Years') }}
-    </x-nav-link>
-
-  </section>
-
   <div
     class='w-full flex flex-col sm:flex-row justify-around items-center sm:items-start max-w-6xl mx-auto'>
 

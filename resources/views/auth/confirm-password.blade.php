@@ -3,7 +3,10 @@
         {{ __('This is a secure area of the application. Please confirm your password before continuing.') }}
     </div>
 
-    <form method="POST" action="{{ route('password.confirm') }}">
+    <form
+      class='w-full flex-col justify-start items-center mt-8 max-w-lg mx-auto px-2'
+      method="POST"
+      action="{{ route('password.confirm') }}">
         @csrf
 
         <!-- Password -->
