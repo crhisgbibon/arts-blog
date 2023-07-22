@@ -31,12 +31,15 @@ class MusicSearchRecords extends Component
   public $records;
   public $tags;
 
+  public $create_filter_artist;
   public $create_artist_id;
   public $create_name;
   public $create_year;
   public $create_stars;
   public $create_review;
   public $create_tags;
+
+  public $existing = [];
 
   public function mount()
   {
@@ -80,6 +83,23 @@ class MusicSearchRecords extends Component
     $this->result_tags = $tag_ids;
   }
 
+  public function create_filter_artist()
+  {
+    foreach($this->artists as $artist)
+    {
+      if((string)$artist['name'] === (string)$this->create_filter_artist)
+      {
+        $this->create_artist_id = (int)$artist['id'];
+        $this->FillExisting();
+      }
+    }
+  }
+
+  public function FillExisting()
+  {
+    $this->existing = $this->model->SearchRecordsById((int)$this->create_artist_id);
+  }
+
   public function create()
   {
     $id = $this->model->create_music_record(
@@ -95,6 +115,8 @@ class MusicSearchRecords extends Component
       (int)$id,
       (array)$this->create_tags,
     );
+
+    $this->FillExisting();
   }
 
   public function update()

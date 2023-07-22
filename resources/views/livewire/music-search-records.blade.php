@@ -28,55 +28,135 @@
     x-show="open"
     class='w-full flex flex-col justify-center items-center'>
 
-    <select
-      size=5
-      class='rounded-lg m-2 w-10/12 max-w-lg'
-      wire:model="create_artist_id">
-      @isset($artists)
-        @foreach($artists as $artist)
-          <option value='{{$artist->id}}'>{{$artist->name}}</option>
+    <div
+      class='flex flex-col justify-start items-center w-full'>
+
+      <label
+        class='mx-2'
+        for='create_name'>
+        Artist:</label>
+
+      <input
+        class='mx-2 rounded-lg border border-black p-2 w-10/12 max-w-lg'
+        wire:model="create_filter_artist"
+        wire:keyup="create_filter_artist"
+        type='text'>
+
+      <select
+        size=5
+        class='rounded-lg m-2 w-10/12 max-w-lg'
+        wire:model="create_artist_id"
+        wire:change="FillExisting">
+        @isset($artists)
+          @foreach($artists as $artist)
+            <option value='{{$artist->id}}'>{{$artist->name}}</option>
+          @endforeach
+        @endisset
+      </select>
+
+    </div>
+
+    <div
+      class='flex flex-col justify-start items-center'>
+      @isset($existing)
+        @foreach($existing as $exists)
+          @if(is_array($exists))
+            <div>{{$exists['name']}} - {{$exists['release_year']}} - {{$exists['stars']}}</div>
+          @else
+            <div>{{$exists->name}} - {{$exists->release_year}} - {{$exists->stars}}</div>
+          @endif
         @endforeach
       @endisset
-    </select>
+    </div>
 
-    <input
-      class='my-2 mx-auto rounded-lg border border-black p-2 w-10/12 max-w-lg'
-      wire:model="create_name"
-      type='text'
-      value=''>
+    <div
+      class='flex flex-row justify-center items-center w-full'>
 
-    <input
-      wire:model="create_year"
-      class='mx-2 rounded-lg border border-black p-2  m-2 w-10/12'
-      type='number'
-      min=0
-      step=1>
+      <label
+        class='mx-2'
+        for='create_name'>
+        Name:</label>
 
-    <input
-      wire:model="create_stars"
-      class='mx-2 rounded-lg border border-black p-2  m-2 w-10/12'
-      type='number'
-      min=1
-      max=5
-      step=1>
+      <input
+        class='mx-2 rounded-lg border border-black p-2 w-10/12 max-w-lg'
+        wire:model="create_name"
+        type='text'
+        value=''>
 
-    <textarea
-      wire:model="create_review"
-      class='mx-2 rounded-lg border border-black p-2  m-2 w-10/12'
-      maxLength=6666
-      rows="4" cols="50"></textarea>
+    </div>
 
-    <select
-      multiple
-      size=10
-      class='rounded-lg m-2 w-10/12 max-w-lg'
-      wire:model="create_tags">
-      @isset($tags)
-        @foreach($tags as $tag)
-          <option value='{{$tag->id}}'>{{$tag->name}}</option>
-        @endforeach
-      @endisset
-    </select>
+    <div
+      class='flex flex-row justify-center items-center w-full'>
+
+      <label
+        class='mx-2'
+        for='create_year'>
+        Year:</label>
+
+      <input
+        wire:model="create_year"
+        class='mx-2 rounded-lg border border-black p-2  m-2 w-10/12 max-w-lg'
+        type='number'
+        min=0
+        step=1>
+
+    </div>
+
+    <div
+      class='flex flex-row justify-center items-center w-full'>
+
+      <label
+        class='mx-2'
+        for='create_stars'>
+        Stars:</label>
+
+      <input
+        wire:model="create_stars"
+        class='mx-2 rounded-lg border border-black p-2  m-2 w-10/12 max-w-lg'
+        type='number'
+        min=1
+        max=5
+        step=1>
+
+    </div>
+
+    <div
+      class='flex flex-col justify-start items-center w-full'>
+
+      <label
+        class='mx-2'
+        for='create_stars'>
+        Review:</label>
+
+      <textarea
+        wire:model="create_review"
+        class='mx-2 rounded-lg border border-black p-2  m-2 w-10/12 max-w-lg'
+        maxLength=6666
+        rows="4" cols="50"></textarea>
+
+    </div>
+
+    <div
+      class='flex flex-col justify-start items-center w-full'>
+
+      <label
+        class='mx-2'
+        for='create_stars'>
+        Tags:</label>
+
+      <select
+        multiple
+        size=10
+        class='rounded-lg m-2 w-10/12 max-w-lg'
+        wire:model="create_tags">
+        @isset($tags)
+          @foreach($tags as $tag)
+            <option value='{{$tag->id}}'>{{$tag->name}}</option>
+          @endforeach
+        @endisset
+      </select>
+
+    </div>
 
     <div
       class='w-10/12 flex flex-row justify-center items-center my-2 max-w-lg'>
@@ -135,6 +215,10 @@
           @endforeach
         @endisset
       </select>
+
+      <label
+        for='result_name'>
+        Name:</label>
 
       <input
         class='my-2 mx-auto rounded-lg border border-black p-2 w-full'

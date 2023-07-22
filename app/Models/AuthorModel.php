@@ -848,6 +848,15 @@ class AuthorModel extends Model
     }
   }
 
+  public function SearchRecordsById(int $artist_id)
+  {
+    return $collection = DB::table($this->records)
+    ->select()
+    ->where('hidden', '=', 0)
+    ->where('artist_id', '=', $artist_id)
+    ->get();
+  }
+
   public function GetTagsByReference(int $ref_type, int $ref_id)
   {
     return $collection = DB::table($this->tags)
