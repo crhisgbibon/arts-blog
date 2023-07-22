@@ -85,7 +85,7 @@
               {{$track->name}}</a>
 
             <div
-              class='flex flex-row justify-end items-center mr-8'>
+              class='flex flex-row justify-end items-center sm:mr-2 md:mr-8'>
         
               @isset($record->stars)
         
